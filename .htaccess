@@ -1,0 +1,7 @@
+# configuracion index.php
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule .* index.php/$0 [PT,L]
+#raiz
+DirectoryIndex index.html index.php
