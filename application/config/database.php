@@ -47,12 +47,12 @@
 
 $active_group = 'default';
 $active_record = TRUE;
-$db['default']['hostname'] = 'sqlite:'.APPPATH.'db/gym.sqlite';
-$db['default']['username'] = '';
-$db['default']['password'] = '';
-$db['default']['database'] = '';
-$db['default']['dbdriver'] = 'pdo';
-$db['default']['dbprefix'] = 'ac_';
+$db['default']['hostname'] = 'localhost';
+$db['default']['username'] = 'root';
+$db['default']['password'] = '123456';
+$db['default']['database'] = 'gym';
+$db['default']['dbdriver'] = 'mysql';
+$db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;
 $db['default']['db_debug'] = TRUE;
 $db['default']['cache_on'] = FALSE;
@@ -63,6 +63,21 @@ $db['default']['swap_pre'] = '';
 $db['default']['autoinit'] = TRUE;
 $db['default']['stricton'] = FALSE;
 
+$db['sqlite']['hostname'] = 'sqlite:' . APPPATH . 'db/gym.sqlite';
+$db['sqlite']['username'] = '';
+$db['sqlite']['password'] = '';
+$db['sqlite']['database'] = '';
+$db['sqlite']['dbdriver'] = 'pdo';
+$db['sqlite']['dbprefix'] = '';
+$db['sqlite']['pconnect'] = TRUE;
+$db['sqlite']['db_debug'] = TRUE;
+$db['sqlite']['cache_on'] = FALSE;
+$db['sqlite']['cachedir'] = '';
+$db['sqlite']['char_set'] = 'utf8';
+$db['sqlite']['dbcollat'] = 'utf8_general_ci';
+$db['sqlite']['swap_pre'] = '';
+$db['sqlite']['autoinit'] = TRUE;
+$db['sqlite']['stricton'] = FALSE;
 
 /* End of file database.php */
 /* Location: ./application/config/database.php */
