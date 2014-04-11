@@ -1,0 +1,16 @@
+SECUENCIA A MIGRAR: MySql a SqLite
+
+1 = ac_usuarios
+2 = ac_empresas
+
+3 = ac_empresa_productos
+4 = ac_categorias
+5 = ac_periodos
+6 = ac_base_productos
+
+6 = ac_socios
+7 = ac_suscriptores
+
+8 = ac_membrecias
+9 = ac_paquetes
+
