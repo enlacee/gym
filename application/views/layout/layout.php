@@ -4,11 +4,12 @@
     
     <head>
         <meta charset="utf-8" />
-        <title>Blank Page - Ace Admin</title>
+        <title><?php echo $title?></title>
 
         <meta name="description" content="" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+        <meta content="<?php echo getPublicUrl(); ?>/images/favicon.png" itemprop="image">
+        
         <!-- basic styles -->
 
         <link href="<?php echo getPublicUrl(); ?>/css/bootstrap.min.css" rel="stylesheet" />
@@ -307,7 +308,7 @@
                                 <li class="divider"></li>
 
                                 <li>
-                                    <a href="#">
+                                    <a href="/authlogin/logout">
                                         <i class="icon-off"></i>
                                         Logout
                                     </a>
@@ -716,7 +717,7 @@
                         <div class="row">
                             <div class="col-xs-12">
                                 <!-- PAGE CONTENT BEGINS -->
-
+                                <?php echo $content_for_layout; ?>
                                 <!-- PAGE CONTENT ENDS -->
                             </div><!-- /.col -->
                         </div><!-- /.row -->
