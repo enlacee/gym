@@ -41,7 +41,10 @@ class Index extends MY_Controller {
             if ($this->input->post('token') == $this->session->userdata('token')) {
                 $dataUsuario = $this->Usuario_model->login($this->input->post('email'), $this->input->post('password'));
                 if (is_array($dataUsuario) && count($dataUsuario) > 0) {
-                    //$dataObjetivo = $this->Objetivo_model->getObjetivos();            
+                    //$dataObjetivo = $this->Objetivo_model->getObjetivos();
+                    if($dataUsuario['activo'] == 0) {
+                        redirect('index/usuarioInactivo');
+                    }                    
                     $data = array (
                        'user' => $dataUsuario,
                     );
@@ -49,7 +52,7 @@ class Index extends MY_Controller {
                     $this->guardarSession($data);
                     redirect('/dashboard');                    
                 } else {
-                  $this->session->set_flashdata('flashMessage', 'Datos no son correctos, Intente nuevamente.');  
+                  $this->session->set_flashdata('flashMessage', 'Datos ingresados no son correctos.');  
                 }
             } else {                
                 redirect('/index'); //echo "token incorrecto";  
