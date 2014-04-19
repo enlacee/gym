@@ -108,14 +108,18 @@ class Usuario_model  extends CI_Model {
 
  // ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
  // funciones adicionales   
-    public function login($user, $password)
+    public function login($user, $password, $dataArray = true)
     {
         $this->db->select()->from($this->_name);
         $this->db->where('email', $user);
         $this->db->where('password', $password);
         $query = $this->db->get();
-        $rs = $query->row_array();         
-        return $this->_setData($rs);            
+        $rs = $query->row_array();
+        if ($dataArray) {
+            return $rs;
+        } else {
+            return $this->_setData($rs);
+        }
     }
     
     public function getByEmail($email)

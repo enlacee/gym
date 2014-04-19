@@ -1,4 +1,4 @@
-
+<?php var_dump($this->load->get_var('flashdata')); exit; ?>
 <!DOCTYPE html>
 <html lang="en">
     

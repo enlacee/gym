@@ -36,8 +36,16 @@ define('FOPEN_READ_WRITE_CREATE',				'a+b');
 define('FOPEN_WRITE_CREATE_STRICT',				'xb');
 define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 
-
-define( 'PUBLIC_URL', '/public' );
-define( 'MEDIA_URL', '/public/static' );
+/*
+|--------------------------------------------------------------------------
+| Constants for application
+|--------------------------------------------------------------------------
+|
+| Title of web page and url of Images Server
+|
+*/
+define('TITLE', 'GYMAPP');
+define('PUBLIC_URL', '/public');
+define('MEDIA_URL', '/public/static');
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */
