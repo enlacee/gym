@@ -102,18 +102,7 @@
                             } catch (e) {
                             }
                         </script>
-
-                        <ul class="breadcrumb">
-                            <li>
-                                <i class="icon-home home-icon"></i>
-                                <a href="#">Home</a>
-                            </li>
-
-                            <li>
-                                <a href="#">Other Pages</a>
-                            </li>
-                            <li class="active">Blank Page</li>
-                        </ul><!-- .breadcrumb -->
+                        <?php if ($this->load->get_var('breadcrumb')) { echo $breadcrumb; } ?>
 
                         <div class="nav-search" id="nav-search">
                             <form class="form-search">

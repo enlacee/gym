@@ -9,8 +9,13 @@ class Dashboard extends MY_Controller {
     
     public function index()
     {
+        $this->breadcrumb->add('Home', '#');
+        $this->breadcrumb->add('Principal', '#');
+        //$this->breadcrumb->add('Tutorials', base_url().'tutorials');
+        
+        
+        //$data = array();
         $this->layout->view('dashboard/index');
-        //$this->load->view('dashboard/index');
     }
     
     public function blanco()

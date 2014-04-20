@@ -39,7 +39,7 @@ class MY_Controller extends CI_Controller {
     
     private function dependencias()
     {
-        $this->load->library(array('layout', 'auth'));        
+        $this->load->library(array('layout', 'auth','breadcrumb'));        
         $this->load->helper(array('ayuda_helper', 'url', 'form'));
         //$this->output->enable_profiler(TRUE);
 
@@ -48,7 +48,7 @@ class MY_Controller extends CI_Controller {
             $flashMessage['flashMessage'] = $this->session->flashdata('flashMessage');
             $this->load->vars($flashMessage); // $this->load->get_var('flashMessage');
         }
-    }    
+    }
     
     /**
      * Carga la libreria jqgrid util para la VISTA     
