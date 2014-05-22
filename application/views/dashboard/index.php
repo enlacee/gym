@@ -1,13 +1,5 @@
 
-<div class="page-content">
-    <!--<div class="page-header">
-        <h1>UI Elements
-            <small>
-                <i class="icon-double-angle-right"></i>
-                Common UI Features &amp; Elements
-            </small>
-        </h1>
-    </div>-->
+<div class="page-content">    
 
     <div class="row">
         <div class="col-xs-12">
@@ -49,8 +41,30 @@
 
                     <div class="tab-content">
                         <div id="socio" class="tab-pane active">
-                            <p>Raw denim you probably haven't heard of them jean shorts Austin.</p>
-                        </div>
+
+                            
+                            <div class="row form-group">
+                                <div class="col-sm-10"> <b>Administrar Membresias</b>
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <button class="btn btn-sm btn-primary">
+                                        <i class="icon-plus align-top bigger-125"></i>
+                                        Agregar
+                                    </button>
+                                </div>                            
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-sm-12"> <!--col-xs-12 -->
+                                    <table id="grid-table"></table>
+
+                                    <div id="grid-pager"></div>
+                                </div>                                
+                            </div>
+                            
+                            
+                        </div>                            
 
                         <div id="profile" class="tab-pane">
                             <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid.</p>

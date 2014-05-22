@@ -45,7 +45,7 @@
             <div class="main-content">                
                 <div class="row">
                     <div class="col-sm-10 col-sm-offset-1">
-                    <?php if(!empty($this->load->get_var('flashMessage'))) : ?>    
+                    <?php $flashMessage=$this->load->get_var('flashMessage'); if(!empty($flashMessage)) : ?>    
                     <div class="alert alert-warning fade in">
                           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                           <?php echo $flashMessage; ?>

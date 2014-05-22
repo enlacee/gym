@@ -2,6 +2,10 @@
 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
+/**
+ * @source http://www.technicalkeeda.com/details/how-to-create-bread-crumb-using-php-codeigniter
+ * 
+ */
 class Breadcrumb {
     public $CI;
     private $breadcrumbs = array();

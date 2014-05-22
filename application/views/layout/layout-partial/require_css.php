@@ -7,6 +7,12 @@
 <![endif]-->
 
 <!-- page specific plugin styles -->
+<?php $css = $this->load->get_var('css'); if (!empty($css)) : ?>
+    <?php foreach ($css as $key => $value): ?>
+    <link rel="stylesheet" type="text/css" href="<?php echo getPublicUrl() . $value; ?>" >
+    <?php endforeach; ?>
+<?php endif; ?>
+
 <!-- fonts -->
 <link rel="stylesheet" href="<?php echo getPublicUrl(); ?>/css/ace-fonts.css" />
 
@@ -19,7 +25,15 @@
   <link rel="stylesheet" href="<?php echo getPublicUrl(); ?>/css/ace-ie.min.css" />
 <![endif]-->
         
-<?php if (!empty($this->load->get_var('css'))) : ?>
-    <?php foreach ($css as $key => $value): ?><link rel="stylesheet" type="text/css" href="<?php echo getPublicUrl() . $value; ?>" ><?php endforeach; ?>
-<?php endif; ?>
- 
+<!-- inline styles related to this page -->
+
+<!-- ace settings handler -->
+
+<script src="<?php echo getPublicUrl() ?>/js/ace-extra.min.js"></script>
+
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+<!--[if lt IE 9]>
+<script src="<?php echo getPublicUrl() ?>/js/html5shiv.js"></script>
+<script src="<?php echo getPublicUrl() ?>/js/respond.min.js"></script>
+<![endif]-->
