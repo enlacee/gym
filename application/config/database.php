@@ -48,7 +48,7 @@
 $active_group = 'default';
 $active_record = TRUE;
 $db['default']['hostname'] = 'localhost';
-$db['default']['username'] = 'root';
+$db['default']['username'] = 'anibal';
 $db['default']['password'] = '123456';
 $db['default']['database'] = 'ac_gym';
 $db['default']['dbdriver'] = 'mysql';
