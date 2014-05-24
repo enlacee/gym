@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `ac_gym` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `ac_gym`;
 -- MySQL dump 10.13  Distrib 5.5.37, for debian-linux-gnu (x86_64)
 --
 -- Host: 127.0.0.1    Database: ac_gym
