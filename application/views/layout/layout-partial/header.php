@@ -256,7 +256,7 @@
                                 <li class="divider"></li>
 
                                 <li>
-                                    <a href="/authlogin/logout">
+                                    <a href="<?php echo base_url('index/logout') ?>">
                                         <i class="icon-off"></i>
                                         Logout
                                     </a>

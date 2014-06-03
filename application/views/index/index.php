@@ -86,7 +86,7 @@
 
                                                     <label class="block clearfix">
                                                         <span class="block input-icon input-icon-right">
-                                                            <input type="password" name="password" class="form-control" placeholder="Password" required=""/>
+                                                            <input type="password" name="password" class="form-control" placeholder="Password" required="" value="123456"/>
                                                             <i class="icon-lock"></i>
                                                         </span>
                                                     </label>
