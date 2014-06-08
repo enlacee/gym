@@ -1,4 +1,4 @@
-CREATE DATABASE  IF NOT EXISTS `ac_gym` /*!40100 DEFAULT CHARACTER SET latin1 */;
+CREATE DATABASE  IF NOT EXISTS `ac_gym` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */;
 USE `ac_gym`;
 -- MySQL dump 10.13  Distrib 5.5.37, for debian-linux-gnu (x86_64)
 --
@@ -35,7 +35,7 @@ CREATE TABLE `ac_base_productos` (
   KEY `fk_ac_producto_base_ac_periodo1_idx` (`id_periodo`),
   CONSTRAINT `fk_ac_producto_base_ac_categoria1` FOREIGN KEY (`id_categoria`) REFERENCES `ac_categorias` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_ac_producto_base_ac_periodo1` FOREIGN KEY (`id_periodo`) REFERENCES `ac_periodos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='tabla para cargar data a la tabla = ac_empresa_productos';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='tabla para cargar data a la tabla = ac_empresa_productos';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -58,7 +58,7 @@ CREATE TABLE `ac_categorias` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='categoria \n- 1 = gym\n- 2 = otro';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='categoria \n- 1 = gym\n- 2 = otro';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -91,7 +91,7 @@ CREATE TABLE `ac_empresa_productos` (
   CONSTRAINT `fk_ac_empresa_productos_ac_categoria1` FOREIGN KEY (`id_categoria`) REFERENCES `ac_categorias` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_ac_empresa_productos_ac_empresas1` FOREIGN KEY (`id_empresa`) REFERENCES `ac_empresas` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_ac_empresa_productos_ac_periodo1` FOREIGN KEY (`id_periodo`) REFERENCES `ac_periodos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -112,7 +112,7 @@ DROP TABLE IF EXISTS `ac_empresas`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ac_empresas` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_usuario` int(11) NOT NULL,
+  `id_usuario` int(11) DEFAULT NULL,
   `nombre` varchar(30) DEFAULT NULL,
   `tipo_documento` enum('RUC','OTRO') DEFAULT NULL,
   `numDocumento` varchar(15) DEFAULT NULL,
@@ -123,7 +123,7 @@ CREATE TABLE `ac_empresas` (
   PRIMARY KEY (`id`),
   KEY `fk_ac_empresas_ac_usuarios1_idx` (`id_usuario`),
   CONSTRAINT `fk_ac_empresas_ac_usuarios1` FOREIGN KEY (`id_usuario`) REFERENCES `ac_usuarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -132,6 +132,7 @@ CREATE TABLE `ac_empresas` (
 
 LOCK TABLES `ac_empresas` WRITE;
 /*!40000 ALTER TABLE `ac_empresas` DISABLE KEYS */;
+INSERT INTO `ac_empresas` VALUES (1,1,'empresa 01','RUC','1045269187',0,0,'2014-06-07 00:00:00','2014-06-07'),(3,NULL,'empresa 02','RUC','1025459187',0,0,'2014-06-07 00:00:00','2014-06-07');
 /*!40000 ALTER TABLE `ac_empresas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -157,7 +158,7 @@ CREATE TABLE `ac_membresias` (
   KEY `fk_ac_membresias_ac_empresas1_idx` (`id_empresa`),
   CONSTRAINT `fk_ac_membresias_ac_empresas1` FOREIGN KEY (`id_empresa`) REFERENCES `ac_empresas` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_ac_membresia_ac_paquete1` FOREIGN KEY (`id_paquete`) REFERENCES `ac_paquetes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='paquete_precio: precio a la mano.\nestado_pago: \n1 = PAGO\n0 = NO PAGO';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='paquete_precio: precio a la mano.\nestado_pago: \n1 = PAGO\n0 = NO PAGO';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -188,7 +189,7 @@ CREATE TABLE `ac_pagos` (
   KEY `fk_ac_pagos_ac_paquetes1_idx` (`id_paquete`),
   CONSTRAINT `fk_ac_pagos_ac_membresias1` FOREIGN KEY (`id_membresia`) REFERENCES `ac_membresias` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_ac_pagos_ac_paquetes1` FOREIGN KEY (`id_paquete`) REFERENCES `ac_paquetes` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -213,7 +214,7 @@ CREATE TABLE `ac_paquetes` (
   `descripcion` varchar(100) DEFAULT NULL,
   `precio` double DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -237,7 +238,7 @@ CREATE TABLE `ac_periodos` (
   `nombre` varchar(20) DEFAULT NULL,
   `nombre_corto` varchar(5) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='- 1 = ninguno\n- 2 = 1dia\n- 3 = 1semana\n- 4 = 1mes\n- 5 = 3meses\n- 6 = 6meses\n- 7 = 1año';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='- 1 = ninguno\n- 2 = 1dia\n- 3 = 1semana\n- 4 = 1mes\n- 5 = 3meses\n- 6 = 6meses\n- 7 = 1año';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -270,7 +271,7 @@ CREATE TABLE `ac_socios` (
   PRIMARY KEY (`id`),
   KEY `fk_ac_socios_ac_empresas1_idx` (`id_empresa`),
   CONSTRAINT `fk_ac_socios_ac_empresas1` FOREIGN KEY (`id_empresa`) REFERENCES `ac_empresas` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -306,7 +307,7 @@ CREATE TABLE `ac_suscriptores` (
   KEY `fk_ac_suscriptores_ac_socios1_idx` (`id_socio`),
   CONSTRAINT `fk_ac_suscriptores_ac_empresa_productos1` FOREIGN KEY (`id_empresa_producto`) REFERENCES `ac_empresa_productos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_ac_suscriptores_ac_socios1` FOREIGN KEY (`id_socio`) REFERENCES `ac_socios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='empresa_producto_precio : procio a la mano.\nestado : \n1 = ACTIVO\n2 = AL COBRO\n3 = EN MORA\n4 = INACTIVO';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='empresa_producto_precio : procio a la mano.\nestado : \n1 = ACTIVO\n2 = AL COBRO\n3 = EN MORA\n4 = INACTIVO';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -327,14 +328,16 @@ DROP TABLE IF EXISTS `ac_usuarios`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `ac_usuarios` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre_completo` varchar(30) DEFAULT NULL,
+  `first_name` varchar(30) DEFAULT NULL,
+  `last_name` varchar(30) DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL,
   `password` varchar(128) DEFAULT NULL,
   `salt` varchar(40) DEFAULT NULL,
-  `fecha_registro` datetime DEFAULT NULL,
-  `activo` int(1) DEFAULT '0',
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  `status` int(1) DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -343,7 +346,7 @@ CREATE TABLE `ac_usuarios` (
 
 LOCK TABLES `ac_usuarios` WRITE;
 /*!40000 ALTER TABLE `ac_usuarios` DISABLE KEYS */;
-INSERT INTO `ac_usuarios` VALUES (1,'anibal copitan','root@gmail.com','123456',NULL,NULL,1);
+INSERT INTO `ac_usuarios` VALUES (1,'PEPE','RIOS','root@gmail.com','123456',NULL,NULL,NULL,1);
 /*!40000 ALTER TABLE `ac_usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -366,7 +369,7 @@ CREATE TABLE `acl_provileges` (
   KEY `fk_ac_acl_provileges_ac_acl_roles1_idx` (`role_id`),
   CONSTRAINT `fk_ac_acl_provileges_ac_acl_resources1` FOREIGN KEY (`resource_id`) REFERENCES `acl_resources` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_ac_acl_provileges_ac_acl_roles1` FOREIGN KEY (`role_id`) REFERENCES `acl_roles` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -391,7 +394,7 @@ CREATE TABLE `acl_resources` (
   `created_at` varchar(45) DEFAULT NULL,
   `updated_at` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -420,7 +423,7 @@ CREATE TABLE `acl_roles` (
   PRIMARY KEY (`id`),
   KEY `fk_ac_acl_roles_ac_acl_roles1_idx` (`parent_id`),
   CONSTRAINT `fk_ac_acl_roles_ac_acl_roles1` FOREIGN KEY (`parent_id`) REFERENCES `acl_roles` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -456,7 +459,7 @@ CREATE TABLE `ci_sessions` (
 
 LOCK TABLES `ci_sessions` WRITE;
 /*!40000 ALTER TABLE `ci_sessions` DISABLE KEYS */;
-INSERT INTO `ci_sessions` VALUES ('7acd484280fe034136bcd12bb15a0f80','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.132 Safari/537.36',1400779476,'a:3:{s:9:\"user_data\";s:0:\"\";s:5:\"token\";s:32:\"4a854404603872b9316a069277fcb606\";s:4:\"user\";a:7:{s:2:\"id\";s:1:\"1\";s:15:\"nombre_completo\";s:14:\"anibal copitan\";s:5:\"email\";s:14:\"root@gmail.com\";s:8:\"password\";s:6:\"123456\";s:4:\"salt\";N;s:14:\"fecha_registro\";N;s:6:\"activo\";s:1:\"1\";}}');
+INSERT INTO `ci_sessions` VALUES ('780d5c82351e0c2fabfbf5ddcbaed9a6','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.114 Safari/537.36',1402175839,'a:3:{s:9:\"user_data\";s:0:\"\";s:5:\"token\";s:32:\"167d0d66b782991833c325039788ff51\";s:4:\"user\";a:7:{s:2:\"id\";s:1:\"1\";s:15:\"nombre_completo\";s:14:\"anibal copitan\";s:5:\"email\";s:14:\"root@gmail.com\";s:8:\"password\";s:6:\"123456\";s:4:\"salt\";N;s:14:\"fecha_registro\";N;s:6:\"activo\";s:1:\"1\";}}'),('c012a8b509f46b4dfe8c5bd11245735f','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/34.0.1847.116 Chrome/34.0.1847.11',1402178528,'a:3:{s:9:\"user_data\";s:0:\"\";s:5:\"token\";s:32:\"3ea50f86ff49f1a09bc0589c4d31caaa\";s:4:\"user\";a:9:{s:2:\"id\";s:1:\"1\";s:10:\"first_name\";s:4:\"PEPE\";s:9:\"last_name\";s:4:\"RIOS\";s:5:\"email\";s:14:\"root@gmail.com\";s:8:\"password\";s:6:\"123456\";s:4:\"salt\";N;s:10:\"created_at\";N;s:10:\"updated_at\";N;s:6:\"status\";s:1:\"1\";}}');
 /*!40000 ALTER TABLE `ci_sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -469,4 +472,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-05-23  2:53:21
+-- Dump completed on 2014-06-07 17:03:36

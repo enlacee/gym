@@ -11,12 +11,12 @@ class Index extends MY_Controller {
     {   //var_dump($this->auth);
         if ($this->userSession) {
             $usuario = $this->session->userdata('user'); //var_dump($usuario);Exit;
-            if ($usuario['activo'] == '1') {
+            if ($usuario['status'] == '1') {
                 redirect('/dashboard');
             } else { // necsita pagar membresia.
                 $this->userSession = false;
                 $this->session->sess_destroy();
-                redirect('/index/usuarioInactivo'); 
+                redirect('/index/usuarioInstatus'); 
             }
         }
     }    
@@ -40,10 +40,11 @@ class Index extends MY_Controller {
         if ($this->input->post()) {
             if ($this->input->post('token') == $this->session->userdata('token')) {
                 $dataUsuario = $this->Usuario_model->login($this->input->post('email'), $this->input->post('password'));
+                
                 if (is_array($dataUsuario) && count($dataUsuario) > 0) {
                     //$dataObjetivo = $this->Objetivo_model->getObjetivos();
-                    if($dataUsuario['activo'] == 0) {
-                        redirect('index/usuarioInactivo');
+                    if($dataUsuario['status'] == 0) {
+                        redirect('index/usuarioInstatus');
                     }                    
                     $data = array (
                        'user' => $dataUsuario,
@@ -89,8 +90,8 @@ class Index extends MY_Controller {
     /**
      * view for usuaruario inactive.
      */
-    public function usuarioInactivo()
+    public function usuarioInstatus()
     {
-        $this->load->view('index/usuario-inactivo');
+        $this->load->view('index/usuario-instatus');
     }
 }
