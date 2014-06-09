@@ -16,15 +16,21 @@ class Socio extends MY_Controller {
     
     public function listGrid()
     {
-        $array[] = array('id' => 1, 'name' => 'pepe reina', 'otro'=> '15');
-        $array[] = array('id' => 2, 'name' => 'maria lopez', 'otro'=> '25');
-        $array[] = array('id' => 3, 'name' => 'martin borge', 'otro'=> '22');
-        $array[] = array('id' => 4, 'name' => 'juan reniro', 'otro'=> '11');
+        $array[] = array(
+            'id' => 1,
+            'first_name' => 'pepe reina',
+            'last_name' => 'rosario',
+            'sexo' => '1',
+            'email'=>'correo@mail.com',
+            'celular' => '995845745');
+        $array[] = array('id' => 2, 'first_name' => 'maria lopez', 'last_name' => 'lopez', 'sexo' => '1', 'email'=>'correo@mail.com');
+        $array[] = array('id' => 3, 'first_name' => 'martin borge', 'last_name'=> 'ruiz', 'sexo' => '2', 'email'=>'correo@mail.com');
+        $array[] = array('id' => 4, 'first_name' => 'juan reniro', 'last_name' => 'lirio', 'sexo' => '1', 'email'=>'correo@mail.com');
         
-        $array[] = array('id' => 5, 'name' => 'maribel rojas', 'otro'=> '15');
-        $array[] = array('id' => 6, 'name' => 'stefany maride', 'otro'=> '25');
-        $array[] = array('id' => 7, 'name' => 'robert linio', 'otro'=> '22');
-        $array[] = array('id' => 8, 'name' => 'ricardo games', 'otro'=> '11');        
+        $array[] = array('id' => 5, 'first_name' => 'maribel rojas', 'last_name' => 'gimenez', 'sexo' => '1');
+        $array[] = array('id' => 6, 'first_name' => 'stefany maride', 'last_name' => 'garza', 'sexo' => '1');
+        $array[] = array('id' => 7, 'first_name' => 'robert linio', 'last_name' => 'roblez', 'sexo' => '1');
+        $array[] = array('id' => 8, 'first_name' => 'ricardo games', 'last_name' => 'castillo', 'sexo' => '1');        
         
         $this->output->set_content_type('application/json');
         $this->output->set_output(json_encode($array));      
