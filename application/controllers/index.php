@@ -4,9 +4,9 @@ class Index extends MY_Controller {
     
     public function __construct()
     {
-        parent::__construct();
+        parent::__construct();        
     }
-    
+    /*
     private function accesoUsuario()
     {   //var_dump($this->auth);
         if ($this->userSession) {
@@ -19,14 +19,14 @@ class Index extends MY_Controller {
                 redirect('/index/usuarioInstatus'); 
             }
         }
-    }    
+    }*/    
     
     /**
      * home principal login
      */
     public function index()
     {
-        $this->accesoUsuario();
+        //$this->accesoUsuario();
         $data['token'] = $this->auth->token();
         $this->load->view('index/index', $data);
     }

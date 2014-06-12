@@ -59,7 +59,7 @@ CREATE TABLE `ac_categorias` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='categoria \n- 1 = gym\n- 2 = otro';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='categoria \n- 1 = gym\n- 2 = vitaminas y suplementos\n- 3 = otro';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -358,34 +358,32 @@ INSERT INTO `ac_usuarios` VALUES (1,'PEPE','RIOS','root@gmail.com','123456',NULL
 UNLOCK TABLES;
 
 --
--- Table structure for table `acl_provileges`
+-- Table structure for table `acl_privileges`
 --
 
-DROP TABLE IF EXISTS `acl_provileges`;
+DROP TABLE IF EXISTS `acl_privileges`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `acl_provileges` (
+CREATE TABLE `acl_privileges` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `role_id` int(11) NOT NULL,
   `resource_id` int(11) NOT NULL,
-  `name` varchar(100) DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_ac_acl_provileges_ac_acl_resources1_idx` (`resource_id`),
   KEY `fk_ac_acl_provileges_ac_acl_roles1_idx` (`role_id`),
   CONSTRAINT `fk_ac_acl_provileges_ac_acl_resources1` FOREIGN KEY (`resource_id`) REFERENCES `acl_resources` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_ac_acl_provileges_ac_acl_roles1` FOREIGN KEY (`role_id`) REFERENCES `acl_roles` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `acl_provileges`
+-- Dumping data for table `acl_privileges`
 --
 
-LOCK TABLES `acl_provileges` WRITE;
-/*!40000 ALTER TABLE `acl_provileges` DISABLE KEYS */;
-/*!40000 ALTER TABLE `acl_provileges` ENABLE KEYS */;
+LOCK TABLES `acl_privileges` WRITE;
+/*!40000 ALTER TABLE `acl_privileges` DISABLE KEYS */;
+INSERT INTO `acl_privileges` VALUES (1,2,1),(2,2,2),(3,2,3);
+/*!40000 ALTER TABLE `acl_privileges` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -398,10 +396,10 @@ DROP TABLE IF EXISTS `acl_resources`;
 CREATE TABLE `acl_resources` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
-  `created_at` varchar(45) DEFAULT NULL,
-  `updated_at` varchar(45) DEFAULT NULL,
+  `created_at` date DEFAULT NULL,
+  `updated_at` date DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -410,6 +408,7 @@ CREATE TABLE `acl_resources` (
 
 LOCK TABLES `acl_resources` WRITE;
 /*!40000 ALTER TABLE `acl_resources` DISABLE KEYS */;
+INSERT INTO `acl_resources` VALUES (1,'dashboard','2014-06-12',NULL),(2,'dashboard/index','2014-06-12',NULL),(3,'socio/listGrid','2014-06-12',NULL);
 /*!40000 ALTER TABLE `acl_resources` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -430,7 +429,7 @@ CREATE TABLE `acl_roles` (
   PRIMARY KEY (`id`),
   KEY `fk_ac_acl_roles_ac_acl_roles1_idx` (`parent_id`),
   CONSTRAINT `fk_ac_acl_roles_ac_acl_roles1` FOREIGN KEY (`parent_id`) REFERENCES `acl_roles` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -439,6 +438,7 @@ CREATE TABLE `acl_roles` (
 
 LOCK TABLES `acl_roles` WRITE;
 /*!40000 ALTER TABLE `acl_roles` DISABLE KEYS */;
+INSERT INTO `acl_roles` VALUES (1,NULL,'admin',0,NULL,NULL),(2,NULL,'usuario',0,NULL,NULL);
 /*!40000 ALTER TABLE `acl_roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -466,7 +466,7 @@ CREATE TABLE `ci_sessions` (
 
 LOCK TABLES `ci_sessions` WRITE;
 /*!40000 ALTER TABLE `ci_sessions` DISABLE KEYS */;
-INSERT INTO `ci_sessions` VALUES ('b576a14f3ae23a8f2ced8d0c05ac5fd2','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/34.0.1847.116 Chrome/34.0.1847.11',1402292108,'');
+INSERT INTO `ci_sessions` VALUES ('5d8833037857dd1ab27dbb902a2d0e81','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.114 Safari/537.36',1402562579,''),('8f7083f8809d1a94441c3e0b91664652','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.114 Safari/537.36',1402563008,'a:2:{s:9:\"user_data\";s:0:\"\";s:5:\"token\";s:32:\"9d92506adbbd75929206432713a0a2dc\";}'),('a26fd7eafdcab33df104a99eed59652d','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.114 Safari/537.36',1402562712,'a:3:{s:9:\"user_data\";s:0:\"\";s:5:\"token\";s:32:\"a64215f17be0c80f7a979a70ac4020a2\";s:4:\"user\";a:9:{s:2:\"id\";s:1:\"1\";s:10:\"first_name\";s:4:\"PEPE\";s:9:\"last_name\";s:4:\"RIOS\";s:5:\"email\";s:14:\"root@gmail.com\";s:8:\"password\";s:6:\"123456\";s:4:\"salt\";N;s:10:\"created_at\";N;s:10:\"updated_at\";N;s:6:\"status\";s:1:\"1\";}}'),('a3699d1394e4e62c0c8e8adbd3704165','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.114 Safari/537.36',1402562724,'a:2:{s:9:\"user_data\";s:0:\"\";s:5:\"token\";s:32:\"756b87d70390b89aeee97edfcf727c45\";}'),('f7a288614f4720183867c311c4a85e6c','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.114 Safari/537.36',1402562566,''),('fafb46452f36508a320d39a08b20d378','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.114 Safari/537.36',1402562593,'a:3:{s:9:\"user_data\";s:0:\"\";s:5:\"token\";s:32:\"2fbb69cc06c624c693a8f343baad0d0e\";s:4:\"user\";a:9:{s:2:\"id\";s:1:\"1\";s:10:\"first_name\";s:4:\"PEPE\";s:9:\"last_name\";s:4:\"RIOS\";s:5:\"email\";s:14:\"root@gmail.com\";s:8:\"password\";s:6:\"123456\";s:4:\"salt\";N;s:10:\"created_at\";N;s:10:\"updated_at\";N;s:6:\"status\";s:1:\"1\";}}');
 /*!40000 ALTER TABLE `ci_sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -479,4 +479,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-06-09  0:41:58
+-- Dump completed on 2014-06-12  4:16:14

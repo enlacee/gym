@@ -9,7 +9,7 @@
 
 class MY_Controller extends CI_Controller {
     
-    public $userSession;
+    public $ACL = FALSE;
     public $userId; 
     public $dataView = array();       
     private $flagGrid = false;
@@ -19,6 +19,7 @@ class MY_Controller extends CI_Controller {
         parent::__construct();
         $this->dependencias();
         $this->validarUsuario();
+        //$this->validACL();
     }
     
     /**
@@ -27,14 +28,64 @@ class MY_Controller extends CI_Controller {
      * - usuario 
      */    
     public function validarUsuario()
-    {
-        $user = $this->session->userdata('user');        
+    {   
+        $user = $this->session->userdata('user'); //var_dump($user); exit;
+        /*$this->session->set_userdata('user','');
+        $user = $this->session->userdata('user'); var_dump($user);*/                    
         if (!empty($user) && isset($user['id'])) {
             $this->userId = $user['id'];            
-            $this->userSession = true;
-        } else {
-            $this->userSession = false;
+            $this->ACL = TRUE;
         }
+    }
+    
+    /**
+     * Use only in class hija
+     */
+    protected function accessAcl()
+    {
+        if ( FALSE == $this->ACL) { // TERMINO SESSION ()
+            if ($this->isAjax()) {
+                echo "Acces denied ajax login (ACL)"; EXIT;
+            } else {
+               redirect("/"); 
+            }
+        } else { 
+            // existen datos y validara si este usuario (rol=usuario) tiene acceso
+            // ac_usuarios = rol 2 (envio rol por input FORM)
+            $statusACL = $this->validACL();            
+            if (FALSE == $statusACL) {
+                if ($this->isAjax()) {
+                    echo "Acces denied ajax (ACL)"; EXIT;
+                } else {
+                    echo "Acces denied (ACL)"; EXIT;
+                }                
+            } 
+        }      
+    }
+
+    /*
+     * list only rol 2 = usuario (default)
+     */
+    private function validACL()
+    {
+        $uri = uri_string(); //current_url()()
+        $flag = FALSE;        
+        $this->load->model('ACL_model');
+        $dataResources = $this->ACL_model->getResources(2);
+        if (is_array($dataResources) && count($dataResources) > 0 ) {
+            foreach ($dataResources as $array) {
+                if ($array['name'] == $uri) {
+                    $flag = TRUE;
+                    break;
+                }
+            }
+        }        
+        return $flag;        
+    }
+    
+    private function isAjax() {
+        return !empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
+        strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
     }
     
     private function dependencias()
@@ -42,6 +93,7 @@ class MY_Controller extends CI_Controller {
         $this->load->library(array('layout', 'auth','breadcrumb'));        
         $this->load->helper(array('ayuda_helper', 'url', 'form'));
         //$this->output->enable_profiler(TRUE);
+        $this->load->driver('cache');
 
         // message flash
         if ($this->session->flashdata('flashMessage') != '') {            

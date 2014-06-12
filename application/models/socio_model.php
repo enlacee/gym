@@ -50,6 +50,17 @@ class Socio_model  extends CI_Model {
                 return true;
             }            
         }
-    }     
+    }
+    
+    /**
+     * List of socios by IDUSUARIO
+     * @param type $dataGrid
+     * @param type $idUsuario
+     * @param type $numRows
+     */
+    public function jqList($dataGrid, $idUsuario, $numRows = FALSE)
+    {
+        
+    }
     
 }
