@@ -39,16 +39,6 @@ CREATE TABLE `ac_base_productos` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `ac_base_productos`
---
-
-LOCK TABLES `ac_base_productos` WRITE;
-/*!40000 ALTER TABLE `ac_base_productos` DISABLE KEYS */;
-INSERT INTO `ac_base_productos` VALUES (1,1,2,'GYM (DIA)',5),(2,1,3,'GYM (SEMANA)',25),(3,1,4,'GYM (MES)',100),(4,1,5,'GYM (3 MES)',300),(5,1,6,'GYM (6 MESES)',600),(6,1,7,'GYM AÑO',1000);
-/*!40000 ALTER TABLE `ac_base_productos` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `ac_categorias`
 --
 
@@ -61,16 +51,6 @@ CREATE TABLE `ac_categorias` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='categoria \n- 1 = gym\n- 2 = vitaminas y suplementos\n- 3 = otro';
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `ac_categorias`
---
-
-LOCK TABLES `ac_categorias` WRITE;
-/*!40000 ALTER TABLE `ac_categorias` DISABLE KEYS */;
-INSERT INTO `ac_categorias` VALUES (1,'GYM'),(2,'VITAMINAS'),(3,'OTRO'),(4,'.');
-/*!40000 ALTER TABLE `ac_categorias` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `ac_empresa_productos`
@@ -97,15 +77,6 @@ CREATE TABLE `ac_empresa_productos` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `ac_empresa_productos`
---
-
-LOCK TABLES `ac_empresa_productos` WRITE;
-/*!40000 ALTER TABLE `ac_empresa_productos` DISABLE KEYS */;
-/*!40000 ALTER TABLE `ac_empresa_productos` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `ac_empresas`
 --
 
@@ -119,7 +90,7 @@ CREATE TABLE `ac_empresas` (
   `tipo_documento` enum('RUC','OTRO') DEFAULT NULL,
   `numDocumento` varchar(15) DEFAULT NULL,
   `instalacion` int(1) DEFAULT '0',
-  `activo` int(1) DEFAULT '0',
+  `status` int(1) DEFAULT '0',
   `fecha_registro` datetime DEFAULT NULL,
   `fecha_inicio_membresia` date DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -129,14 +100,19 @@ CREATE TABLE `ac_empresas` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `ac_empresas`
+-- Table structure for table `ac_logs`
 --
 
-LOCK TABLES `ac_empresas` WRITE;
-/*!40000 ALTER TABLE `ac_empresas` DISABLE KEYS */;
-INSERT INTO `ac_empresas` VALUES (1,1,'empresa 01 PEPE RIOS','RUC','1045269187',0,0,'2014-06-07 00:00:00','2014-06-07'),(3,NULL,'empresa 02','RUC','1025459187',0,0,'2014-06-07 00:00:00','2014-06-07');
-/*!40000 ALTER TABLE `ac_empresas` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `ac_logs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ac_logs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `message` text COLLATE utf8_unicode_ci,
+  `date` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `ac_membresias`
@@ -163,15 +139,6 @@ CREATE TABLE `ac_membresias` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `ac_membresias`
---
-
-LOCK TABLES `ac_membresias` WRITE;
-/*!40000 ALTER TABLE `ac_membresias` DISABLE KEYS */;
-/*!40000 ALTER TABLE `ac_membresias` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `ac_pagos`
 --
 
@@ -194,15 +161,6 @@ CREATE TABLE `ac_pagos` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `ac_pagos`
---
-
-LOCK TABLES `ac_pagos` WRITE;
-/*!40000 ALTER TABLE `ac_pagos` DISABLE KEYS */;
-/*!40000 ALTER TABLE `ac_pagos` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `ac_paquetes`
 --
 
@@ -219,15 +177,6 @@ CREATE TABLE `ac_paquetes` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `ac_paquetes`
---
-
-LOCK TABLES `ac_paquetes` WRITE;
-/*!40000 ALTER TABLE `ac_paquetes` DISABLE KEYS */;
-/*!40000 ALTER TABLE `ac_paquetes` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `ac_periodos`
 --
 
@@ -241,16 +190,6 @@ CREATE TABLE `ac_periodos` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='- 1 = ninguno\n- 2 = 1dia\n- 3 = 1semana\n- 4 = 1mes\n- 5 = 3meses\n- 6 = 6meses\n- 7 = 1año';
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `ac_periodos`
---
-
-LOCK TABLES `ac_periodos` WRITE;
-/*!40000 ALTER TABLE `ac_periodos` DISABLE KEYS */;
-INSERT INTO `ac_periodos` VALUES (1,'-','-'),(2,'1 DIA','1DIA'),(3,'1 SEMANA','1SEM'),(4,'1 MES','1MES'),(5,'3 MESES ','3MES'),(6,'6 MESES','6MES'),(7,'1 AÑO','1AN');
-/*!40000 ALTER TABLE `ac_periodos` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `ac_socios`
@@ -274,18 +213,8 @@ CREATE TABLE `ac_socios` (
   PRIMARY KEY (`id`),
   KEY `fk_ac_socios_ac_usuarios1_idx` (`id_usuario`),
   CONSTRAINT `fk_ac_socios_ac_usuarios1` FOREIGN KEY (`id_usuario`) REFERENCES `ac_usuarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `ac_socios`
---
-
-LOCK TABLES `ac_socios` WRITE;
-/*!40000 ALTER TABLE `ac_socios` DISABLE KEYS */;
-INSERT INTO `ac_socios` VALUES (1,1,'mario','robles','M','919187545','mario@gmail.com','direccion 01','observacion 01','2014-06-07 00:00:00',NULL),(2,1,'MARIA','LUNA','F','956584578','maria@gmail.com','direccion maria','observacion .','2014-06-07 00:00:00',NULL);
-/*!40000 ALTER TABLE `ac_socios` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `ac_socios_suscriptores`
@@ -298,7 +227,7 @@ CREATE TABLE `ac_socios_suscriptores` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_socio` int(11) NOT NULL,
   `id_empresa` int(11) NOT NULL,
-  `id_empresa_producto` int(11) NOT NULL,
+  `id_empresa_producto` int(11) DEFAULT NULL,
   `empresa_producto_precio` double DEFAULT NULL,
   `pago` double DEFAULT NULL,
   `adeuda` double DEFAULT NULL,
@@ -316,15 +245,6 @@ CREATE TABLE `ac_socios_suscriptores` (
   CONSTRAINT `ac_socios_suscriptores_ibfk_2` FOREIGN KEY (`id_empresa`) REFERENCES `ac_empresas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='empresa_producto_precio : procio a la mano.\nestado : \n1 = ACTIVO\n2 = AL COBRO\n3 = EN MORA\n4 = INACTIVO';
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `ac_socios_suscriptores`
---
-
-LOCK TABLES `ac_socios_suscriptores` WRITE;
-/*!40000 ALTER TABLE `ac_socios_suscriptores` DISABLE KEYS */;
-/*!40000 ALTER TABLE `ac_socios_suscriptores` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `ac_usuarios`
@@ -348,16 +268,6 @@ CREATE TABLE `ac_usuarios` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `ac_usuarios`
---
-
-LOCK TABLES `ac_usuarios` WRITE;
-/*!40000 ALTER TABLE `ac_usuarios` DISABLE KEYS */;
-INSERT INTO `ac_usuarios` VALUES (1,'PEPE','RIOS','root@gmail.com','123456',NULL,NULL,NULL,1);
-/*!40000 ALTER TABLE `ac_usuarios` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `acl_privileges`
 --
 
@@ -377,16 +287,6 @@ CREATE TABLE `acl_privileges` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `acl_privileges`
---
-
-LOCK TABLES `acl_privileges` WRITE;
-/*!40000 ALTER TABLE `acl_privileges` DISABLE KEYS */;
-INSERT INTO `acl_privileges` VALUES (1,2,1),(2,2,2),(3,2,3);
-/*!40000 ALTER TABLE `acl_privileges` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `acl_resources`
 --
 
@@ -401,16 +301,6 @@ CREATE TABLE `acl_resources` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `acl_resources`
---
-
-LOCK TABLES `acl_resources` WRITE;
-/*!40000 ALTER TABLE `acl_resources` DISABLE KEYS */;
-INSERT INTO `acl_resources` VALUES (1,'dashboard','2014-06-12',NULL),(2,'dashboard/index','2014-06-12',NULL),(3,'socio/listGrid','2014-06-12',NULL);
-/*!40000 ALTER TABLE `acl_resources` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `acl_roles`
@@ -433,16 +323,6 @@ CREATE TABLE `acl_roles` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `acl_roles`
---
-
-LOCK TABLES `acl_roles` WRITE;
-/*!40000 ALTER TABLE `acl_roles` DISABLE KEYS */;
-INSERT INTO `acl_roles` VALUES (1,NULL,'admin',0,NULL,NULL),(2,NULL,'usuario',0,NULL,NULL);
-/*!40000 ALTER TABLE `acl_roles` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `ci_sessions`
 --
 
@@ -459,16 +339,6 @@ CREATE TABLE `ci_sessions` (
   KEY `last_activity_idx` (`last_activity`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `ci_sessions`
---
-
-LOCK TABLES `ci_sessions` WRITE;
-/*!40000 ALTER TABLE `ci_sessions` DISABLE KEYS */;
-INSERT INTO `ci_sessions` VALUES ('5d8833037857dd1ab27dbb902a2d0e81','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.114 Safari/537.36',1402562579,''),('8f7083f8809d1a94441c3e0b91664652','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.114 Safari/537.36',1402563008,'a:2:{s:9:\"user_data\";s:0:\"\";s:5:\"token\";s:32:\"9d92506adbbd75929206432713a0a2dc\";}'),('a26fd7eafdcab33df104a99eed59652d','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.114 Safari/537.36',1402562712,'a:3:{s:9:\"user_data\";s:0:\"\";s:5:\"token\";s:32:\"a64215f17be0c80f7a979a70ac4020a2\";s:4:\"user\";a:9:{s:2:\"id\";s:1:\"1\";s:10:\"first_name\";s:4:\"PEPE\";s:9:\"last_name\";s:4:\"RIOS\";s:5:\"email\";s:14:\"root@gmail.com\";s:8:\"password\";s:6:\"123456\";s:4:\"salt\";N;s:10:\"created_at\";N;s:10:\"updated_at\";N;s:6:\"status\";s:1:\"1\";}}'),('a3699d1394e4e62c0c8e8adbd3704165','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.114 Safari/537.36',1402562724,'a:2:{s:9:\"user_data\";s:0:\"\";s:5:\"token\";s:32:\"756b87d70390b89aeee97edfcf727c45\";}'),('f7a288614f4720183867c311c4a85e6c','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.114 Safari/537.36',1402562566,''),('fafb46452f36508a320d39a08b20d378','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.114 Safari/537.36',1402562593,'a:3:{s:9:\"user_data\";s:0:\"\";s:5:\"token\";s:32:\"2fbb69cc06c624c693a8f343baad0d0e\";s:4:\"user\";a:9:{s:2:\"id\";s:1:\"1\";s:10:\"first_name\";s:4:\"PEPE\";s:9:\"last_name\";s:4:\"RIOS\";s:5:\"email\";s:14:\"root@gmail.com\";s:8:\"password\";s:6:\"123456\";s:4:\"salt\";N;s:10:\"created_at\";N;s:10:\"updated_at\";N;s:6:\"status\";s:1:\"1\";}}');
-/*!40000 ALTER TABLE `ci_sessions` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -479,4 +349,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-06-12  4:16:14
+-- Dump completed on 2014-06-14 20:33:31
