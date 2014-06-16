@@ -16,7 +16,8 @@ var pager_selector = "#grid-pager";
 jQuery(grid_selector).jqGrid({
     url:'socio/listGrid',
     datatype: "json",
-    colNames:['id','nombre', 'apellido', 'sexo','celular','mail','direccion','nota','Fecha registro'],
+    colNames:['id','nombre', 'apellido', 'sexo','celular','mail','direccion','nota','Fecha registro',
+    'uno'],
     colModel:[
         {name:'id',index:'id', width:55, search:false},
         {name:'first_name',index:'first_name', width:150, editable:true},
@@ -25,8 +26,11 @@ jQuery(grid_selector).jqGrid({
         {name:'celular',index:'celular', width:100, hidden:true},
         {name:'email',index:'email', width:100, hidden:true},
         {name:'direccion',index:'direccion', width:100, hidden:true},
-        {name:'nota',index:'nota', width:100, hidden:true},
-        {name:'fecha_registro',index:'fecha_registro', width:130, align:"right"}
+        {name:'observacion',index:'observacion', width:100, hidden:true},
+        {name:'fecha_registro',index:'fecha_registro', width:130, align:"right"},
+        
+        //socio suscrito        
+        {name:'id_empresa_producto',index:'id_empresa_producto', width:130, align:"right"},
     ],
     rowNum:10,
     rowList:[10,20,30],
@@ -35,7 +39,7 @@ jQuery(grid_selector).jqGrid({
     viewrecords: true,
     sortorder: "desc",
     editurl:'/adm_variable/jqeditar',
-    caption: "Manipulating Array Data",
+    //caption: "Manipulating Array Data",
     loadComplete: function() {
 	    var table = this;
 	    setTimeout(function() {
@@ -165,54 +169,75 @@ $('#celular').mask('999-999-9?99');
 // validation
 $(function(){
 $('#formAddSocio').validate({
-	errorElement: 'div',
-	errorClass: 'help-block',
-	focusInvalid: false,
-    /*rules: {
-        title: {required : true, minlength: 3, maxlength: 50}
-      },*/
-	invalidHandler: function (event, validator) { //display error alert on form submit
-		$('.alert-danger', $('.login-form')).show();
-	},
+    errorElement: 'div',
+    errorClass: 'help-block',
+    focusInvalid: false,
+/*rules: {
+    title: {required : true, minlength: 3, maxlength: 50}
+  },*/
+    invalidHandler: function (event, validator) { //display error alert on form submit
+        //$('.alert-danger', $('.login-form')).show();
+    },
 
-	highlight: function (e) {
-		$(e).closest('.form-group').removeClass('has-info').addClass('has-error');
-	},
+    highlight: function (e) {
+        $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+    },
 
-	success: function (e) {
-		$(e).closest('.form-group').removeClass('has-error').addClass('has-info');
-		$(e).remove();
-	},
-	errorPlacement: function (error, element) {
-		if(element.is(':checkbox') || element.is(':radio')) {
-			var controls = element.closest('div[class*="col-"]');
-			if(controls.find(':checkbox,:radio').length > 1) controls.append(error);
-			else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
-		}
-		else if(element.is('.select2')) {
-			error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
-		}
-		else if(element.is('.chosen-select')) {
-			error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
-		}
-		else {
-			error.insertAfter(element); //error.insertAfter(element.parent());
-		}
-	},
-	submitHandler: function (form) {
-		console.log("submit");
+    success: function (e) {
+        $(e).closest('.form-group').removeClass('has-error').addClass('has-info');
+        $(e).remove();
+    },
+    errorPlacement: function (error, element) {
+            if(element.is(':checkbox') || element.is(':radio')) {
+                var controls = element.closest('div[class*="col-"]');
+                if(controls.find(':checkbox,:radio').length > 1) controls.append(error);
+                else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
+            }
+            else if(element.is('.select2')) {
+                error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
+            }
+            else if(element.is('.chosen-select')) {
+                error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
+            }
+            else {
+                error.insertAfter(element); //error.insertAfter(element.parent());
+            }
+    },
+    submitHandler: function (form) {            
+        //console.log("form",form.children);
+        console.log("submit");
+        var obj = $(this);
+
+        //obj[0].currentForm[10].text("enviandooo");            
         $.ajax({
             url: form.action,
             type: form.method,
             data: $(form).serialize(),
+            beforeSend: function() {
+                //form.children[0].setAttribute("disabled","disabled");
+                obj[0].currentForm[10].innerHTML ="Enviando...";
+            },
             success: function(response) {
-                $('#answers').html(response);
+                //$('#answers').html(response);                    
+                if (response == 1) {
+                    form.children[0].removeAttribute('disabled');
+                    $('#myModal').modal('hide');
+                    form.reset();
+                    obj[0].currentForm[10].innerHTML ="Enviar";
+                    
+                    $(grid_selector).trigger("reloadGrid"); 
+                    bootbox.alert("Se Guardo correctamente!", function() {
+                        //Example.show("Hello world callback");
+                    });
+                } else {
+                    alert("error request");
+                }
             }
         });
-	},
-	invalidHandler: function (form) {
+    },
+    invalidHandler: function (form) {
 
-	}
+    }
 });
 
 });

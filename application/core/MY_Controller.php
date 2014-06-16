@@ -18,8 +18,7 @@ class MY_Controller extends CI_Controller {
     {
         parent::__construct();
         $this->dependencias();
-        $this->validarUsuario();
-        //$this->validACL();
+        $this->validarUsuario();        
     }
     
     /**
@@ -27,13 +26,11 @@ class MY_Controller extends CI_Controller {
      * - administrador 
      * - usuario 
      */    
-    public function validarUsuario()
+    private function validarUsuario()
     {   
-        $user = $this->session->userdata('user'); //var_dump($user); exit;
-        /*$this->session->set_userdata('user','');
-        $user = $this->session->userdata('user'); var_dump($user);*/                    
+        $user = $this->session->userdata('user');                  
         if (!empty($user) && isset($user['id'])) {
-            $this->userId = $user['id'];            
+            $this->userId = $user['id'];
             $this->ACL = TRUE;
         }
     }
@@ -43,8 +40,9 @@ class MY_Controller extends CI_Controller {
      */
     protected function accessAcl()
     {
+        $isAjax = isAjax(); 
         if ( FALSE == $this->ACL) { // TERMINO SESSION ()
-            if ($this->isAjax()) {
+            if ($isAjax) {
                 echo "Acces denied ajax login (ACL)"; EXIT;
             } else {
                redirect("/"); 
@@ -54,7 +52,7 @@ class MY_Controller extends CI_Controller {
             // ac_usuarios = rol 2 (envio rol por input FORM)
             $statusACL = $this->validACL();            
             if (FALSE == $statusACL) {
-                if ($this->isAjax()) {
+                if ($isAjax) {
                     echo "Acces denied ajax (ACL)"; EXIT;
                 } else {
                     echo "Acces denied (ACL)"; EXIT;
@@ -68,7 +66,7 @@ class MY_Controller extends CI_Controller {
      */
     private function validACL()
     {
-        $uri = uri_string(); //current_url()()
+        $uri = uri_string();
         $flag = FALSE;        
         $this->load->model('ACL_model');
         $dataResources = $this->ACL_model->getResources(2);
@@ -81,13 +79,8 @@ class MY_Controller extends CI_Controller {
             }
         }        
         return $flag;        
-    }
-    
-    private function isAjax() {
-        return !empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
-        strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
-    }
-    
+    }    
+   
     private function dependencias()
     {
         $this->load->library(array('layout', 'auth','breadcrumb'));        
@@ -101,6 +94,15 @@ class MY_Controller extends CI_Controller {
             $this->load->vars($flashMessage); // $this->load->get_var('flashMessage');
         }
     }
+    
+    /**
+     * Clear cache (option CRUD in db)
+     */ 
+    protected function cleanCache()
+    {   
+        $this->load->driver('cache');
+        $this->cache->file->clean();
+    }    
     
     /**
      * Carga la libreria jqgrid util para la VISTA     

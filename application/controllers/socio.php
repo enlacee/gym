@@ -5,7 +5,9 @@ class Socio extends MY_Controller {
     public function __construct()
     {
         parent::__construct();
-        $this->accessAcl();
+        //$this->accessAcl();
+        
+        $this->load->model('Socio_model');
     }    
     
     public function index()
@@ -16,7 +18,71 @@ class Socio extends MY_Controller {
     }
     
     public function listGrid()
-    {
+    {   
+        //------
+        $page = $this->input->get('page');
+      	$limit = $this->input->get('rows'); //MY_ControllerAdmin::LIMIT;
+        $sidx = $this->input->get('sidx');
+        $sord = $this->input->get('sord');
+        $dataGrid = array();
+        $responce = new stdClass();
+        if (isset($_GET['searchField']) && ($_GET['searchString'] != null)) {
+            $operadores["eq"] = "=";
+            $operadores["ne"] = "<>";
+            $operadores["lt"] = "<";
+            $operadores["le"] = "<=";
+            $operadores["gt"] = ">";
+            $operadores["ge"] = ">=";
+            $operadores["cn"] = "LIKE";
+            if ($_GET['searchOper'] == "cn") {
+                $dataGrid['string'] = $_GET['searchField'] . " " . $operadores[$_GET['searchOper']] . " '%" . $_GET['searchString'] . "%' ";
+            } else {
+                $dataGrid['string'] = $_GET['searchField'] . " " . $operadores[$_GET['searchOper']] . "'" . $_GET['searchString'] . "'";
+            }                
+        }      
+        
+        $count = $this->Socio_model->jqListSociosSuscritos(1, $dataGrid, TRUE);
+        if ($count > 0) {
+            $total_pages = ceil($count/$limit);
+        } else {
+           $total_pages = 1; 
+        }
+        if ($page > $total_pages) { $page = $total_pages; }// $page = 0
+        if ($page < 1) { $page = 1; }
+        
+        $start = $limit * $page - $limit;
+        
+        $dataGrid['oderby'] = array('sidx' => $sidx, 'sord' => $sord);
+        $dataGrid['limit'] = $limit;
+        $dataGrid['start'] = $start;       
+        $result = $this->Socio_model->jqListSociosSuscritos(1, $dataGrid);
+        
+        $responce->page = $page;
+        $responce->total = $total_pages;
+        $responce->records = $count;
+        $i = 0;
+        while (list($clave, $row) = each($result)) {
+            $responce->rows[$i]['id'] = $row['id'];
+            $responce->rows[$i]['cell'] = array(
+                $row['id'],
+                $row['first_name'],
+                $row['last_name'],
+                $row['sexo'],
+                $row['celular'],
+                $row['email'],
+                $row['direccion'],
+                $row['observacion']);
+            $i++;        
+        }
+        
+        $this->output->set_content_type('application/json');
+        $this->output->set_output(json_encode($responce));          
+        
+        
+        
+        
+        
+        /*
         $array[] = array(
             'id' => 1,
             'first_name' => 'pepe reina',
@@ -34,43 +100,34 @@ class Socio extends MY_Controller {
         $array[] = array('id' => 8, 'first_name' => 'ricardo games', 'last_name' => 'castillo', 'sexo' => '1');        
         
         $this->output->set_content_type('application/json');
-        $this->output->set_output(json_encode($array));      
+        $this->output->set_output(json_encode($array));*/      
     }
     
     public function add()
     {
         if ($this->input->post()) {
-            //if ($this->input->post('token') == $this->session->userdata('token')) { }            
-            
+            //if ($this->input->post('token') == $this->session->userdata('token')) { }
             // session
-            $usuario = $this->session->all_userdata();
-            //$usuario = $this->session->_userdata('user'); 
-
-            // get data con model pero validar ACL
+            $usuario = $this->session->userdata('user');
             
-            echo "<pre>";            
-            print_r($usuario);
+            $dataSocio['id_usuario'] = $usuario['id'];
+            $dataSocio['first_name'] = $this->input->post('addSocio_first_name');
+            $dataSocio['last_name'] = $this->input->post('addSocio_last_name');
+            $dataSocio['sexo'] = $this->input->post('addSocio_sexo');
+            $dataSocio['email'] = $this->input->post('addSocio_email');
+            $dataSocio['celular'] = $this->input->post('addSocio_celular');
+            $dataSocio['direccion'] = $this->input->post('addSocio_direccion');
+            $dataSocio['observacion'] = $this->input->post('addSocio_observacion');
+            $dataSocio['created_at'] = date("Y-m-d h:i:s");            
+            $dataSocio['additional']['empresa_id'] = $usuario['empresa_id'];
             
-            /*
-            $imgTmp = (isset($dataSession['img_tmp']) && is_array($dataSession['img_tmp'])) ? $dataSession['img_tmp'] : '';
-            if (!empty($imgTmp)) {                                
-                $targetFile = $this->load->get_var('latestNewsPath') . $imgTmp['name'];
-                if (!copy($imgTmp['path'], $targetFile)) { log_message("error", "failed to copy"); }
-                $dataPost['url_image'] = $imgTmp['name'];
-                $this->session->set_userdata('post',''); // LIMPIAR IMAGEN
-            }
-            
-            
-
-            $dataPost ['title'] = $this->input->post('nombre');
-            $dataPost ['content'] = $this->input->post('editor');
-            $dataPost ['status'] = Post_model::STATUS_TRUE;
-            $dataPost ['post_type'] = Post_model::TIPO_POST;            
-            $dataPost ['created_at'] = date('Y-m-d H:i:s');
-            $this->Post_model->add($dataPost);            
+                    
+            $this->load->model('Socio_model');
+            $this->Socio_model->add($dataSocio);
             $this->cleanCache();
-            $this->session->set_flashdata('flashMessage', "Added  correctly Last News.");
-            redirect('admin_post/post');*/
+            echo 1;
+            //$this->output->set_content_type('application/json');
+            //$this->output->set_output(json_encode($arrayJson));            
         }         
     }
     

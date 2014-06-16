@@ -6,20 +6,17 @@ class Index extends MY_Controller {
     {
         parent::__construct();        
     }
-    /*
+    
     private function accesoUsuario()
-    {   //var_dump($this->auth);
-        if ($this->userSession) {
-            $usuario = $this->session->userdata('user'); //var_dump($usuario);Exit;
-            if ($usuario['status'] == '1') {
-                redirect('/dashboard');
-            } else { // necsita pagar membresia.
-                $this->userSession = false;
-                $this->session->sess_destroy();
-                redirect('/index/usuarioInstatus'); 
-            }
+    {
+        $usuario = $this->session->userdata('user'); //var_dump($usuario);Exit;
+        if ($usuario['status'] == '1') {
+            //redirect('/dashboard');
+        } else { // necsita pagar membresia.            
+            $this->session->sess_destroy();
+            redirect('/index/usuarioInstatus'); 
         }
-    }*/    
+    } 
     
     /**
      * home principal login
@@ -92,6 +89,7 @@ class Index extends MY_Controller {
      */
     public function usuarioInstatus()
     {
+        //$this->layout->view('index/usuario-instatus');
         $this->load->view('index/usuario-instatus');
     }
 }

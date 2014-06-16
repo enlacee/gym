@@ -1,21 +1,26 @@
                 <div class="row">
+                    <form action="" id="formEditSocio" name="formEditSocio">
                     <div class="">
                             <div class="widget-main panel panel-primary padding-10">
                                 <ul class=" spaced list-inline">
-                                    <li><strong class="blue">Suscrito a:</strong></li>    
-                                <li><button class="btn btn-xs btn-grey disabled">GYM 1DIA</button></li>
-                                <li><button class="btn btn-xs btn-grey disabled ">GYM 1SEM</button></li>
-                                <li><button class="btn btn-sm btn-primary ">GYM 1MES</button></li>
-                                <li><button class="btn btn-xs btn-grey ">GYM 3MES</button></li>
-                                <li><button class="btn btn-xs btn-grey ">GYM 6MES</button></li>
-                                <li><button class="btn btn-xs btn-grey ">GYM 1AN</button></li>
+                                    <li><strong type="button" class="blue">Suscrito a:</strong></li>    
+                                    <li><button type="button" class="btn btn-xs btn-grey disabled">GYM 1DIA</button></li>
+                                    <li><button type="button" class="btn btn-xs btn-grey disabled ">GYM 1SEM</button></li>
+                                    <li><button type="button" class="btn btn-sm btn-primary ">GYM 1MES</button></li>
+                                    <li><button type="button" class="btn btn-xs btn-grey ">GYM 3MES</button></li>
+                                    <li><button type="button" class="btn btn-xs btn-grey ">GYM 6MES</button></li>
+                                    <li><button type="button" class="btn btn-xs btn-grey ">GYM 1AN</button></li>
                                 </ul>
                             </div>                            
                                                 
                     </div>
-
+                    
+                    <div>
+                        <input type="text" name="id_empresa_producto" value=""/>
+                    </div>
+                    
                     <div class="col-md-6">
-                        <form action="" id="formEditSocio" name="formEditSocio">
+                        
                         <div class="row form-group">
                             <div class="col-md-4 col-sm-2"><label>Nombres</label></div>
                             <div class="col-md-4 col-sm-5">
@@ -32,12 +37,12 @@
                             <div class="col-md-8 col-sm-10">
                                 <div class="radio-inline">
                                     <label>
-                                        <input class="required" type="radio" id="sexo" name="sexo" value="1">Femenino
+                                        <input class="required" type="radio" id="sexo" name="sexo" value="F">Femenino
                                     </label>
                                 </div>
                                 <div class="radio-inline">
                                     <label>
-                                        <input class="required" type="radio" id="sexo" name="sexo" value="2">Masculino
+                                        <input class="required" type="radio" id="sexo" name="sexo" value="M">Masculino
                                     </label>
                                 </div>
                             </div>
@@ -70,12 +75,21 @@
                                 <textarea id="observacion" name="observacion" class="form-control" ></textarea>
                             </div>
                         </div>
-                        
-
-                        </form>
+                            
+                            
+                            <div class="row"></div>
+                            <div class="row"></div>
+                            <div class="row"></div>                        
                     </div>
 
-                    <div class="col-md-6">
-                        +
-                    </div>
-                </div>                                          
+                    <div class="col-md-6">+</div>
+                    
+                    <!-- floatando TOOL-->
+                    <div class="tools">
+                        <div class="action-buttons bigger-125">           
+                            <button class="btn btn-danger no-radius"><i class="icon-save bigger-130"></i> Guardar</button>                
+                            <button type="button" class="btn btn-default no-radius">Cancelar</button>
+                        </div>
+                    </div>                          
+                    </form>
+                </div>

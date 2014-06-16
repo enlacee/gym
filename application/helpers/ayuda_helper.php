@@ -35,4 +35,27 @@ if(!function_exists('getPublicUrl'))
     }
 }*/
 
-//end application/helpers/ayuda_helper.php
+/**
+ * Is Resquest ajax (true or false)
+ */
+if(!function_exists('isAjax'))
+{
+    function isAjax() {
+        return !empty($_SERVER['HTTP_X_REQUESTED_WITH']) &&
+        strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
+    }
+}
+
+/**
+ * Registro en tabla ac_logs : error in process
+ */
+if(!function_exists('insert_log')) {
+    function insert_log($message)
+    {   
+        $CI =& get_instance();
+        $CI->load->model('Log_model'); 
+        $data = array ('message'=> $message, 'date' => date("Y-m-d H:i:s"));
+        $response = $CI->Log_model->add($data);
+        return $response;
+    }
+}

@@ -13,7 +13,7 @@
                             </a>
                         </li>
 
-                        <li class="">
+                        <li class="">                            
                             <a data-toggle="tab" href="#profile">Edicion</a>
                         </li>
                     </ul>
@@ -46,7 +46,7 @@
 
                         </div>
 
-                        <div id="profile" class="tab-pane">
+                        <div id="profile" class="tab-pane itemdiv">
                             <?php $this->load->view('dashboard/index/_formEditSocio.php'); ?>
                         </div>
 

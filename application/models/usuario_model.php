@@ -129,4 +129,26 @@ class Usuario_model  extends CI_Model {
         $rs = $query->row_array();
         return $this->_setData($rs);        
     }
+    
+    public function getEmpresa($idUsuario)
+    {
+        $keyCache = __CLASS__ .'_'. __FUNCTION__ .'_'. $idUsuario;        
+        if (($rs = $this->cache->file->get($keyCache)) == FALSE) {
+            $stringSelect = "id AS empresa_id, "
+                            . "nombre AS empresa_nombre, "
+                            . "numDocumento AS empresa_numDocumento, "
+                            . "tipo_documento AS empresa_tipo_documento, "
+                            . "instalacion AS empresa_instalacion, "
+                            . "status AS empresa_status, "
+                            . "fecha_inicio_membresia AS empresa_fecha_inicio_membresia ";
+            $this->db->select($stringSelect);
+            $this->db->from('ac_empresas');
+            $this->db->where('id_usuario', $idUsuario);
+            $this->db->where('status', Usuario_model::ESTADO_ACTIVO);
+            $query = $this->db->get();
+            $rs = $query->result_array();            
+            $this->cache->file->save($keyCache, $rs);
+        }
+        return $rs;
+    }
 }

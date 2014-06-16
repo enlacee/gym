@@ -1,4 +1,5 @@
             <form action="socio/add" name="formAddSocio" id="formAddSocio" method="POST">
+                <fieldset name="fset_formAddSocio" id="fset_formAddSocio">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     <h4 class="modal-title" id="myModalLabel">Nuevo Socio (client)</h4>
@@ -21,12 +22,12 @@
                         <div class="col-md-8 col-sm-10">
                             <div class="radio-inline">
                                 <label>
-                                    <input class="required" type="radio" id="addSocio_sexo" name="addSocio_sexo" value="1">Femenino
+                                    <input class="required" type="radio" id="addSocio_sexo" name="addSocio_sexo" value="F">Femenino
                                 </label>
                             </div>
                             <div class="radio-inline">
                                 <label>
-                                    <input class="required" type="radio" id="addSocio_sexo" name="addSocio_sexo" value="2">Masculino
+                                    <input class="required" type="radio" id="addSocio_sexo" name="addSocio_sexo" value="M">Masculino
                                 </label>
                             </div>
                         </div>
@@ -65,9 +66,10 @@
                     </div>
 
                 </div>
+                </fieldset>
                 <div class="modal-footer">
-                    <button >enviar</button>
-                    <button id ="btnSave"  class="btn btn-default" data-dismiss="modal">Save</button>
-                    <button id ="btnClose" type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button class="btn btn-default">Enviar</button>
+                    <!--<button id ="btnSave"  class="btn btn-default" data-dismiss="modal">Save</button>-->
+                    <button id ="btnClose" type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                 </div>
             </form>
