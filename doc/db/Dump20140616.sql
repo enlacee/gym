@@ -35,8 +35,18 @@ CREATE TABLE `ac_base_productos` (
   KEY `fk_ac_producto_base_ac_periodo1_idx` (`id_periodo`),
   CONSTRAINT `fk_ac_producto_base_ac_categoria1` FOREIGN KEY (`id_categoria`) REFERENCES `ac_categorias` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_ac_producto_base_ac_periodo1` FOREIGN KEY (`id_periodo`) REFERENCES `ac_periodos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='tabla para cargar data a la tabla = ac_empresa_productos';
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='tabla para cargar data a la tabla = ac_empresa_productos';
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ac_base_productos`
+--
+
+LOCK TABLES `ac_base_productos` WRITE;
+/*!40000 ALTER TABLE `ac_base_productos` DISABLE KEYS */;
+INSERT INTO `ac_base_productos` VALUES (1,1,2,'1 DIA',5),(2,1,3,'1 SEMANA',35),(3,1,4,'1 MES',150),(4,1,5,'3 MESES',450),(5,1,6,'6 MESES',900),(8,1,7,'1 AÑO',1500);
+/*!40000 ALTER TABLE `ac_base_productos` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `ac_categorias`
@@ -49,8 +59,18 @@ CREATE TABLE `ac_categorias` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='categoria \n- 1 = gym\n- 2 = vitaminas y suplementos\n- 3 = otro';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='categoria \n- 1 = gym\n- 2 = vitaminas y suplementos\n- 3 = otro';
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ac_categorias`
+--
+
+LOCK TABLES `ac_categorias` WRITE;
+/*!40000 ALTER TABLE `ac_categorias` DISABLE KEYS */;
+INSERT INTO `ac_categorias` VALUES (1,'GYM'),(2,'VITAMINAS'),(3,'OTRO');
+/*!40000 ALTER TABLE `ac_categorias` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `ac_empresa_productos`
@@ -77,6 +97,15 @@ CREATE TABLE `ac_empresa_productos` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `ac_empresa_productos`
+--
+
+LOCK TABLES `ac_empresa_productos` WRITE;
+/*!40000 ALTER TABLE `ac_empresa_productos` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ac_empresa_productos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `ac_empresas`
 --
 
@@ -96,8 +125,18 @@ CREATE TABLE `ac_empresas` (
   PRIMARY KEY (`id`),
   KEY `fk_ac_empresas_ac_usuarios1_idx` (`id_usuario`),
   CONSTRAINT `fk_ac_empresas_ac_usuarios1` FOREIGN KEY (`id_usuario`) REFERENCES `ac_usuarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ac_empresas`
+--
+
+LOCK TABLES `ac_empresas` WRITE;
+/*!40000 ALTER TABLE `ac_empresas` DISABLE KEYS */;
+INSERT INTO `ac_empresas` VALUES (1,1,'EMPRESA 01','RUC','1045269187',0,1,'2014-06-16 00:00:00',NULL),(2,NULL,'EMPRESA 02','RUC','10452699887',0,0,'2014-06-16 00:00:00',NULL);
+/*!40000 ALTER TABLE `ac_empresas` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `ac_logs`
@@ -111,8 +150,17 @@ CREATE TABLE `ac_logs` (
   `message` text COLLATE utf8_unicode_ci,
   `date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ac_logs`
+--
+
+LOCK TABLES `ac_logs` WRITE;
+/*!40000 ALTER TABLE `ac_logs` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ac_logs` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `ac_membresias`
@@ -139,6 +187,15 @@ CREATE TABLE `ac_membresias` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `ac_membresias`
+--
+
+LOCK TABLES `ac_membresias` WRITE;
+/*!40000 ALTER TABLE `ac_membresias` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ac_membresias` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `ac_pagos`
 --
 
@@ -161,6 +218,15 @@ CREATE TABLE `ac_pagos` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `ac_pagos`
+--
+
+LOCK TABLES `ac_pagos` WRITE;
+/*!40000 ALTER TABLE `ac_pagos` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ac_pagos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `ac_paquetes`
 --
 
@@ -177,6 +243,15 @@ CREATE TABLE `ac_paquetes` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `ac_paquetes`
+--
+
+LOCK TABLES `ac_paquetes` WRITE;
+/*!40000 ALTER TABLE `ac_paquetes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ac_paquetes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `ac_periodos`
 --
 
@@ -187,9 +262,20 @@ CREATE TABLE `ac_periodos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(20) DEFAULT NULL,
   `nombre_corto` varchar(5) DEFAULT NULL,
+  `dia` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='- 1 = ninguno\n- 2 = 1dia\n- 3 = 1semana\n- 4 = 1mes\n- 5 = 3meses\n- 6 = 6meses\n- 7 = 1año';
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ac_periodos`
+--
+
+LOCK TABLES `ac_periodos` WRITE;
+/*!40000 ALTER TABLE `ac_periodos` DISABLE KEYS */;
+INSERT INTO `ac_periodos` VALUES (1,'-','-',NULL),(2,'1 DIA','1DIA',NULL),(3,'1 SEMANA','1SEM',NULL),(4,'1 MES','1MES',NULL),(5,'3 MESES','3MES',NULL),(6,'6 MESES','6MES',NULL),(7,'1 AÑO','1AÑO',NULL);
+/*!40000 ALTER TABLE `ac_periodos` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `ac_socios`
@@ -213,8 +299,18 @@ CREATE TABLE `ac_socios` (
   PRIMARY KEY (`id`),
   KEY `fk_ac_socios_ac_usuarios1_idx` (`id_usuario`),
   CONSTRAINT `fk_ac_socios_ac_usuarios1` FOREIGN KEY (`id_usuario`) REFERENCES `ac_usuarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ac_socios`
+--
+
+LOCK TABLES `ac_socios` WRITE;
+/*!40000 ALTER TABLE `ac_socios` DISABLE KEYS */;
+INSERT INTO `ac_socios` VALUES (1,1,'MARIO','ROJAS','M','958458458','mario_rojas@hotmail.com','direccion mario rojas','sin observacion','2014-06-16 00:00:00',NULL),(2,1,'MARIA','ROBLES','F','989658547','robles@gmail.com','sin direccion maria','recien salido de una operacion del pulmon.','2014-06-16 00:00:00',NULL);
+/*!40000 ALTER TABLE `ac_socios` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `ac_socios_suscriptores`
@@ -243,8 +339,18 @@ CREATE TABLE `ac_socios_suscriptores` (
   CONSTRAINT `ac_socios_suscriptores_ibfk_3` FOREIGN KEY (`id_empresa_producto`) REFERENCES `ac_empresa_productos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `ac_socios_suscriptores_ibfk_1` FOREIGN KEY (`id_socio`) REFERENCES `ac_socios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `ac_socios_suscriptores_ibfk_2` FOREIGN KEY (`id_empresa`) REFERENCES `ac_empresas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='empresa_producto_precio : procio a la mano.\nestado : \n1 = ACTIVO\n2 = AL COBRO\n3 = EN MORA\n4 = INACTIVO';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='empresa_producto_precio : procio a la mano.\nestado : \n1 = ACTIVO\n2 = AL COBRO\n3 = EN MORA\n4 = INACTIVO';
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ac_socios_suscriptores`
+--
+
+LOCK TABLES `ac_socios_suscriptores` WRITE;
+/*!40000 ALTER TABLE `ac_socios_suscriptores` DISABLE KEYS */;
+INSERT INTO `ac_socios_suscriptores` VALUES (1,1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2,2,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+/*!40000 ALTER TABLE `ac_socios_suscriptores` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `ac_usuarios`
@@ -268,6 +374,16 @@ CREATE TABLE `ac_usuarios` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `ac_usuarios`
+--
+
+LOCK TABLES `ac_usuarios` WRITE;
+/*!40000 ALTER TABLE `ac_usuarios` DISABLE KEYS */;
+INSERT INTO `ac_usuarios` VALUES (1,'ROBERTO','RONEY','root@gmail.com','123456',NULL,'2014-06-16 00:00:00',NULL,1);
+/*!40000 ALTER TABLE `ac_usuarios` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `acl_privileges`
 --
 
@@ -287,6 +403,16 @@ CREATE TABLE `acl_privileges` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `acl_privileges`
+--
+
+LOCK TABLES `acl_privileges` WRITE;
+/*!40000 ALTER TABLE `acl_privileges` DISABLE KEYS */;
+INSERT INTO `acl_privileges` VALUES (1,2,1),(2,2,2),(3,2,3);
+/*!40000 ALTER TABLE `acl_privileges` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `acl_resources`
 --
 
@@ -297,10 +423,19 @@ CREATE TABLE `acl_resources` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
   `created_at` date DEFAULT NULL,
-  `updated_at` date DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `acl_resources`
+--
+
+LOCK TABLES `acl_resources` WRITE;
+/*!40000 ALTER TABLE `acl_resources` DISABLE KEYS */;
+INSERT INTO `acl_resources` VALUES (1,'dashboard','2014-06-16'),(2,'dashboard/index','2014-06-16'),(3,'socio/listGrid','2014-06-16');
+/*!40000 ALTER TABLE `acl_resources` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `acl_roles`
@@ -313,14 +448,22 @@ CREATE TABLE `acl_roles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `parent_id` int(11) DEFAULT NULL,
   `name` varchar(20) DEFAULT NULL,
-  `is_admin` int(1) DEFAULT '0',
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
+  `created_at` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_ac_acl_roles_ac_acl_roles1_idx` (`parent_id`),
   CONSTRAINT `fk_ac_acl_roles_ac_acl_roles1` FOREIGN KEY (`parent_id`) REFERENCES `acl_roles` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `acl_roles`
+--
+
+LOCK TABLES `acl_roles` WRITE;
+/*!40000 ALTER TABLE `acl_roles` DISABLE KEYS */;
+INSERT INTO `acl_roles` VALUES (1,NULL,'admin','2014-06-16'),(2,NULL,'usuario','2014-06-16');
+/*!40000 ALTER TABLE `acl_roles` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `ci_sessions`
@@ -339,6 +482,16 @@ CREATE TABLE `ci_sessions` (
   KEY `last_activity_idx` (`last_activity`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ci_sessions`
+--
+
+LOCK TABLES `ci_sessions` WRITE;
+/*!40000 ALTER TABLE `ci_sessions` DISABLE KEYS */;
+INSERT INTO `ci_sessions` VALUES ('f7e6212a011f0fd86093b9688b7909e5','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.114 Safari/537.36',1402901936,'a:3:{s:9:\"user_data\";s:0:\"\";s:5:\"token\";s:32:\"b853bf418837fb6b5c7723b8780c6c41\";s:4:\"user\";a:16:{s:2:\"id\";s:1:\"1\";s:10:\"first_name\";s:7:\"ROBERTO\";s:9:\"last_name\";s:5:\"RONEY\";s:5:\"email\";s:14:\"root@gmail.com\";s:8:\"password\";s:6:\"123456\";s:4:\"salt\";N;s:10:\"created_at\";s:19:\"2014-06-16 00:00:00\";s:10:\"updated_at\";N;s:6:\"status\";s:1:\"1\";s:10:\"empresa_id\";s:1:\"1\";s:14:\"empresa_nombre\";s:10:\"EMPRESA 01\";s:20:\"empresa_numDocumento\";s:10:\"1045269187\";s:22:\"empresa_tipo_documento\";s:3:\"RUC\";s:19:\"empresa_instalacion\";s:1:\"0\";s:14:\"empresa_status\";s:1:\"1\";s:30:\"empresa_fecha_inicio_membresia\";N;}}');
+/*!40000 ALTER TABLE `ci_sessions` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -349,4 +502,4 @@ CREATE TABLE `ci_sessions` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-06-15  0:41:16
+-- Dump completed on 2014-06-16  2:04:16

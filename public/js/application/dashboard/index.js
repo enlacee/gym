@@ -30,7 +30,7 @@ jQuery(grid_selector).jqGrid({
         {name:'fecha_registro',index:'fecha_registro', width:130, align:"right"},
         
         //socio suscrito        
-        {name:'id_empresa_producto',index:'id_empresa_producto', width:130, align:"right"},
+        {name:'id_empresa_producto',index:'id_empresa_producto', width:130, align:"right", hidden:true},
     ],
     rowNum:10,
     rowList:[10,20,30],
