@@ -71,7 +71,9 @@ class Socio extends MY_Controller {
                 $row['celular'],
                 $row['email'],
                 $row['direccion'],
-                $row['observacion']);
+                $row['observacion'],
+                // socio suscrito
+                $row['id_empresa_producto']);
             $i++;        
         }
         

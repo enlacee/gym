@@ -12,9 +12,7 @@ class Dashboard extends MY_Controller {
     {   
         $this->breadcrumb->add('Home', '#');
         $this->breadcrumb->add('Principal', '#');
-        //$this->breadcrumb->add('Tutorials', base_url().'tutorials');
-        $this->vincularEmpresa();
-                        
+        //$this->breadcrumb->add('Tutorials', base_url().'tutorials');                        
         $this->loadStatic(array('css' => '/css/jquery-ui.min.css'));
         $this->loadStatic(array('css' => '/css/datepicker.css'));
         $this->loadStatic(array('css' => '/css/ui.jqgrid.css'));
@@ -35,24 +33,6 @@ class Dashboard extends MY_Controller {
         //$data = array();
         $this->layout->view('dashboard/index');
     }
-    
-    private function vincularEmpresa()
-    {
-        $this->load->model('Usuario_model');
-        $usuario = $this->session->userdata('user');        
-        $idUsuario = $usuario['id'];        
-
-        //var_dump(get_class_methods($this->Usuario_model->getEmpresa($idUsuario)));Exit;
-        $data = $this->Usuario_model->getEmpresa($idUsuario);
-        if ($data != FALSE && is_array($data) && count($data) == 1) {
-            $array = array_merge($usuario, $data[0]);            
-            $this->session->set_userdata(array('user' => $array));
-            
-        } else {
-            echo "usuario no tiene empresa vinculada"; exit;
-        }
-    }
-    
     
     public function grid()
     {   

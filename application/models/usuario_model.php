@@ -151,4 +151,24 @@ class Usuario_model  extends CI_Model {
         }
         return $rs;
     }
+
+    // install company
+    /**
+     * Select data by categoria GYM
+     * @return type
+     */
+    public function getInstallBaseProductos()
+    {
+        $keyCache = __CLASS__ .'_'. __FUNCTION__;        
+        if (($rs = $this->cache->file->get($keyCache)) == FALSE) {
+            $this->db->select();
+            $this->db->from('ac_base_productos');            
+            $this->db->where('id_categoria', 1);
+            $query = $this->db->get();
+            $rs = $query->result_array();            
+            $this->cache->file->save($keyCache, $rs);
+        }
+        return $rs;
+    }
+
 }

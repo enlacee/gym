@@ -44,7 +44,7 @@ CREATE TABLE `ac_base_productos` (
 
 LOCK TABLES `ac_base_productos` WRITE;
 /*!40000 ALTER TABLE `ac_base_productos` DISABLE KEYS */;
-INSERT INTO `ac_base_productos` VALUES (1,1,2,'1 DIA',5),(2,1,3,'1 SEMANA',35),(3,1,4,'1 MES',150),(4,1,5,'3 MESES',450),(5,1,6,'6 MESES',900),(8,1,7,'1 AÑO',1500);
+INSERT INTO `ac_base_productos` VALUES (1,1,2,'GYM 1DIA',5),(2,1,3,'GYM 1SEM',35),(3,1,4,'GYM 1MES',150),(4,1,5,'GYM 3MES',450),(5,1,6,'GYM 6MES',900),(8,1,7,'GYM 1AN',1500);
 /*!40000 ALTER TABLE `ac_base_productos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -150,7 +150,7 @@ CREATE TABLE `ac_logs` (
   `message` text COLLATE utf8_unicode_ci,
   `date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -159,6 +159,7 @@ CREATE TABLE `ac_logs` (
 
 LOCK TABLES `ac_logs` WRITE;
 /*!40000 ALTER TABLE `ac_logs` DISABLE KEYS */;
+INSERT INTO `ac_logs` VALUES (1,'Empresa Instalado: id [id_empresa]1','2014-06-18 02:13:02'),(2,'Empresa Instalado: ac_empresas [id_empresa] = 1','2014-06-18 02:18:26'),(3,'Empresa Instalado: ac_empresas [id_empresa] = 1','2014-06-18 02:22:30');
 /*!40000 ALTER TABLE `ac_logs` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -273,7 +274,7 @@ CREATE TABLE `ac_periodos` (
 
 LOCK TABLES `ac_periodos` WRITE;
 /*!40000 ALTER TABLE `ac_periodos` DISABLE KEYS */;
-INSERT INTO `ac_periodos` VALUES (1,'-','-',NULL),(2,'1 DIA','1DIA',NULL),(3,'1 SEMANA','1SEM',NULL),(4,'1 MES','1MES',NULL),(5,'3 MESES','3MES',NULL),(6,'6 MESES','6MES',NULL),(7,'1 AÑO','1AÑO',NULL);
+INSERT INTO `ac_periodos` VALUES (1,'-','-',0),(2,'1 DIA','1DIA',1),(3,'1 SEMANA','1SEM',7),(4,'1 MES','1MES',30),(5,'3 MESES','3MES',90),(6,'6 MESES','6MES',180),(7,'1 AÑO','1AÑO',360);
 /*!40000 ALTER TABLE `ac_periodos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -489,7 +490,7 @@ CREATE TABLE `ci_sessions` (
 
 LOCK TABLES `ci_sessions` WRITE;
 /*!40000 ALTER TABLE `ci_sessions` DISABLE KEYS */;
-INSERT INTO `ci_sessions` VALUES ('f7e6212a011f0fd86093b9688b7909e5','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.114 Safari/537.36',1402901936,'a:3:{s:9:\"user_data\";s:0:\"\";s:5:\"token\";s:32:\"b853bf418837fb6b5c7723b8780c6c41\";s:4:\"user\";a:16:{s:2:\"id\";s:1:\"1\";s:10:\"first_name\";s:7:\"ROBERTO\";s:9:\"last_name\";s:5:\"RONEY\";s:5:\"email\";s:14:\"root@gmail.com\";s:8:\"password\";s:6:\"123456\";s:4:\"salt\";N;s:10:\"created_at\";s:19:\"2014-06-16 00:00:00\";s:10:\"updated_at\";N;s:6:\"status\";s:1:\"1\";s:10:\"empresa_id\";s:1:\"1\";s:14:\"empresa_nombre\";s:10:\"EMPRESA 01\";s:20:\"empresa_numDocumento\";s:10:\"1045269187\";s:22:\"empresa_tipo_documento\";s:3:\"RUC\";s:19:\"empresa_instalacion\";s:1:\"0\";s:14:\"empresa_status\";s:1:\"1\";s:30:\"empresa_fecha_inicio_membresia\";N;}}');
+INSERT INTO `ci_sessions` VALUES ('b28b40614d70b07a758000ca0caef6ae','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.114 Safari/537.36',1403076201,'a:3:{s:9:\"user_data\";s:0:\"\";s:5:\"token\";s:32:\"41e90ebd45dfafbc1c0457c79935994e\";s:4:\"user\";a:16:{s:2:\"id\";s:1:\"1\";s:10:\"first_name\";s:7:\"ROBERTO\";s:9:\"last_name\";s:5:\"RONEY\";s:5:\"email\";s:14:\"root@gmail.com\";s:8:\"password\";s:6:\"123456\";s:4:\"salt\";N;s:10:\"created_at\";s:19:\"2014-06-16 00:00:00\";s:10:\"updated_at\";N;s:6:\"status\";s:1:\"1\";s:10:\"empresa_id\";s:1:\"1\";s:14:\"empresa_nombre\";s:10:\"EMPRESA 01\";s:20:\"empresa_numDocumento\";s:10:\"1045269187\";s:22:\"empresa_tipo_documento\";s:3:\"RUC\";s:19:\"empresa_instalacion\";s:1:\"1\";s:14:\"empresa_status\";s:1:\"1\";s:30:\"empresa_fecha_inicio_membresia\";N;}}');
 /*!40000 ALTER TABLE `ci_sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -502,4 +503,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-06-16  2:04:16
+-- Dump completed on 2014-06-18  2:50:53

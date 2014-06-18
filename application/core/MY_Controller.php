@@ -60,6 +60,17 @@ class MY_Controller extends CI_Controller {
             } 
         }      
     }
+    
+    /**
+     * Funcion general
+     * @return Array session usuario 
+     */
+    public function getUserSession()
+    {
+        $this->load->model('Usuario_model');
+        $usuario = $this->session->userdata('user');
+        return $usuario;
+    }
 
     /*
      * list only rol 2 = usuario (default)

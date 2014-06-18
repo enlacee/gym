@@ -1,6 +1,9 @@
                 <div class="row">
                     <form action="" id="formEditSocio" name="formEditSocio">
-                    <div class="">
+                   
+                        <fieldset>
+                            id_empresa_producto<input type="text" name="id_empresa_producto" value=""/>
+                            
                             <div class="widget-main panel panel-primary padding-10">
                                 <ul class=" spaced list-inline">
                                     <li><strong type="button" class="blue">Suscrito a:</strong></li>    
@@ -12,12 +15,8 @@
                                     <li><button type="button" class="btn btn-xs btn-grey ">GYM 1AN</button></li>
                                 </ul>
                             </div>                            
-                                                
-                    </div>
-                    
-                    <div>
-                        <input type="text" name="id_empresa_producto" value=""/>
-                    </div>
+                        </fieldset>                   
+
                     
                     <div class="col-md-6">
                         
