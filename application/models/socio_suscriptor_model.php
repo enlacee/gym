@@ -3,14 +3,16 @@
 class Socio_Suscriptor_model  extends CI_Model {
     
     protected $_name = 'ac_socios_suscriptores';
-    
+    const BAJA_TRUE = 1;
+    const BAJA_FALSE = 0;
+
     public function __construct() {
         parent::__construct();
     }    
     
     public function jqListar($dataGrid, $num_rows = false)
     {   
-        $rs = false;        
+        $rs = false;
         if(is_string($dataGrid) && !empty($dataGrid)) {
             //$this->db->where('1=1'); 
             $this->db->where($dataGrid);            
@@ -35,9 +37,9 @@ class Socio_Suscriptor_model  extends CI_Model {
             }
         }
         
-        $this->db->select('id_variable, nombre, tipo_variable, patron_a_validar,fecha_registro');        
+        $this->db->select('id_variable, nombre, tipo_variable, patron_a_validar,fecha_registro');
         $query = $this->db->get($this->_name); 
-        //log_message('error', print_r($this->db->last_query(),true));        
+        //log_message('error', print_r($this->db->last_query(),true));
         if ($num_rows === true) {
             //$rs = $query->num_fields();
             $rs = $query->num_rows();

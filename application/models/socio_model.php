@@ -108,9 +108,10 @@ class Socio_model  extends CI_Model {
         
         $this->db->select("$this->_name.*, ac_socios_suscriptores.id_empresa_producto");
         $this->db->from($this->_name);
-        $this->db->join("ac_socios_suscriptores", "$this->_name.id = ac_socios_suscriptores.id_socio");        
-        $query = $this->db->get();        
-        
+        $this->db->join("ac_socios_suscriptores", "$this->_name.id = ac_socios_suscriptores.id_socio");
+        $this->db->where('ac_socios_suscriptores.baja', 0);
+        $query = $this->db->get();
+
         if ($num_rows === true) {
             //$rs = $query->num_fields();
             $rs = $query->num_rows();

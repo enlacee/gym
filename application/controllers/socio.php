@@ -11,6 +11,7 @@ class socio extends my_controller {
         //$this->accessacl();
 
         $this->load->model('socio_model');
+        $this->load->model('Socio_Suscriptor_model');
     }
 
     public function index()
@@ -113,7 +114,7 @@ class socio extends my_controller {
         if ($this->input->post()) {
             //if ($this->input->post('token') == $this->session->userdata('token')) { }
             // session
-            $usuario = $this->session->userdata('user');
+            $usuario = $this->getUserSession();
 
             $datasocio['id_usuario'] = $usuario['id'];
             $datasocio['first_name'] = $this->input->post('addsocio_first_name');
@@ -138,14 +139,20 @@ class socio extends my_controller {
 
     public function del()
     {
-        $oper = $this->input->post('oper');
-        $id = $this->input->post('id');
-        if ( !empty($oper == 'oper') && !empty($id) ) {
-            $this->load->model('socio_model');
-            $this->socio_model->add($datasocio);
-            $dataUpdate = $data; //array('nombre' => $this->input->post('nombre'));
-            $this->db->update($this->_name, $dataUpdate);
+        $op = $this->input->post('oper');
+        $id = (int) $this->input->post('id');
+        if ($op == 'del' && $id > 0) {
+                //$this->db->where('id', $id);
+                //$this->db->delete('ac_socios_suscriptores', array('id' => $id), 1);
+                $where = array('id' => $id);
+                $this->db->update(
+                    'ac_socios_suscriptores',
+                    array('baja' => Socio_Suscriptor_model::BAJA_TRUE),
+                    $where,
+                    1);
 
+        } else {
+            echo "exit"; exit;
         }
     }
     

@@ -72,7 +72,7 @@ socio.fn.prototype.grid = function() {
         sortname: 'id',
         viewrecords: true,
         sortorder: "desc",
-        editurl:'/adm_variable/jqeditar',
+        editurl:'socio/del',
         //caption: "Manipulating Array Data",
         loadComplete: function() {
             var table = this;

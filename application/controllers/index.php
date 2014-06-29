@@ -9,7 +9,7 @@ class Index extends MY_Controller {
     
     private function accesoUsuario()
     {
-        $usuario = $this->session->userdata('user'); //var_dump($usuario);Exit;
+        $usuario = $this->getUserSession();
         if ($usuario['status'] == '1') {
             //redirect('/dashboard');
         } else { // necsita pagar membresia.            
