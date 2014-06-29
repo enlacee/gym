@@ -1,3 +1,7 @@
+# IDE
 /nbproject/*
+.idea/*
+
+# APP
 /application/logs/*
 /application/cache/*

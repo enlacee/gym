@@ -74,8 +74,11 @@ class Index extends MY_Controller {
         }        
         return $flag;
     }
-    
-    
+
+    /**
+     * JOIN usuario with empresa,
+     * for save data in session and re-use
+     */
     private function vincularEmpresa()
     {
         $this->load->model('Usuario_model');
@@ -92,7 +95,11 @@ class Index extends MY_Controller {
             $mLog = "usuario no tiene empresa vinculada"; insert_log($mLog); echo $mLog; exit;
         }
     }
-    
+
+    /**
+     * Create config base for Company,
+     * setting type of products.
+     */
     private function instalacionEmpresa()
     {
         $this->load->model('Usuario_model');
