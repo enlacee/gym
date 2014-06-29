@@ -184,7 +184,7 @@ socio.fn.prototype.grid = function() {
 };
 
 socio.fn.prototype.validateNewSocio = function() {
-    $('#formAddSocio').validate({
+    $(socio.param.formAddSocio).validate({
         errorElement: 'div',
         errorClass: 'help-block',
         focusInvalid: false,
@@ -252,8 +252,10 @@ socio.fn.prototype.validateNewSocio = function() {
     });
 }
 
-
-console.log("init");
+/**
+ * Init Object and Functionalities
+ * @type {socio.fn}
+ */
 var classSocio = new socio.fn();
 classSocio.init();
 classSocio.validateNewSocio();
