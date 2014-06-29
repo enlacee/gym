@@ -111,8 +111,7 @@ class socio extends my_controller {
 
     public function add()
     {
-        if ($this->input->post()) {
-            //if ($this->input->post('token') == $this->session->userdata('token')) { }
+        if (isAjax() == TRUE && $this->input->post()) {
             // session
             $usuario = $this->getUserSession();
 

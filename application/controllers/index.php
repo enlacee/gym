@@ -23,7 +23,6 @@ class Index extends MY_Controller {
      */
     public function index()
     {
-        //$this->accesoUsuario();
         $data['token'] = $this->auth->token();
         $this->load->view('index/index', $data);
     }
@@ -39,16 +38,17 @@ class Index extends MY_Controller {
                 $dataUsuario = $this->Usuario_model->login($this->input->post('email'), $this->input->post('password'));
                 
                 if (is_array($dataUsuario) && count($dataUsuario) > 0) {
-                    //$dataObjetivo = $this->Objetivo_model->getObjetivos();
-                    if($dataUsuario['status'] == 0) {
-                        redirect('index/usuarioInstatus');
-                    }                    
-                    $data = array (
-                       'user' => $dataUsuario,
-                    );
-                    // para enviar mensaje de respuesta xq no se concreto.
-                    $this->guardarSession($data);
-                    redirect('/dashboard');                    
+                    if ($dataUsuario['status'] == 1) {
+                        $data = array ('user' => $dataUsuario); // para enviar mensaje de respuesta xq no se concreto.
+                        $this->guardarSession($data);
+                        redirect('/dashboard');
+
+                    } else if ($dataUsuario['status'] == 0) {
+                        // necsita pagar membresia.
+                        $this->session->sess_destroy();
+                        redirect('/index/usuarioInstatus');
+                    }
+
                 } else {
                   $this->session->set_flashdata('flashMessage', 'Datos ingresados no son correctos.');  
                 }
@@ -56,6 +56,7 @@ class Index extends MY_Controller {
                 redirect('/index'); //echo "token incorrecto";  
             }          
         }
+
         redirect('/index');
     }
     
