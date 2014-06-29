@@ -1,62 +1,65 @@
 <?php
 
-class Socio extends MY_Controller {
+/**
+ * Class Socio
+ */
+class socio extends my_controller {
 
     public function __construct()
     {
         parent::__construct();
-        //$this->accessAcl();
-        
-        $this->load->model('Socio_model');
-    }    
-    
+        //$this->accessacl();
+
+        $this->load->model('socio_model');
+    }
+
     public function index()
     {
         $data['token'] = $this->auth->token();
-        $this->load->view('index/index', $data);        
-        
+        $this->load->view('index/index', $data);
+
     }
-    
-    public function listGrid()
-    {   
+
+    public function listgrid()
+    {
         //------
         $page = $this->input->get('page');
-      	$limit = $this->input->get('rows'); //MY_ControllerAdmin::LIMIT;
+      	$limit = $this->input->get('rows'); //my_controlleradmin::limit;
         $sidx = $this->input->get('sidx');
         $sord = $this->input->get('sord');
-        $dataGrid = array();
-        $responce = new stdClass();
-        if (isset($_GET['searchField']) && ($_GET['searchString'] != null)) {
+        $datagrid = array();
+        $responce = new stdclass();
+        if (isset($_get['searchfield']) && ($_get['searchstring'] != null)) {
             $operadores["eq"] = "=";
             $operadores["ne"] = "<>";
             $operadores["lt"] = "<";
             $operadores["le"] = "<=";
             $operadores["gt"] = ">";
             $operadores["ge"] = ">=";
-            $operadores["cn"] = "LIKE";
-            if ($_GET['searchOper'] == "cn") {
-                $dataGrid['string'] = $_GET['searchField'] . " " . $operadores[$_GET['searchOper']] . " '%" . $_GET['searchString'] . "%' ";
+            $operadores["cn"] = "like";
+            if ($_get['searchoper'] == "cn") {
+                $datagrid['string'] = $_get['searchfield'] . " " . $operadores[$_get['searchoper']] . " '%" . $_get['searchstring'] . "%' ";
             } else {
-                $dataGrid['string'] = $_GET['searchField'] . " " . $operadores[$_GET['searchOper']] . "'" . $_GET['searchString'] . "'";
-            }                
-        }      
-        
-        $count = $this->Socio_model->jqListSociosSuscritos(1, $dataGrid, TRUE);
+                $datagrid['string'] = $_get['searchfield'] . " " . $operadores[$_get['searchoper']] . "'" . $_get['searchstring'] . "'";
+            }
+        }
+
+        $count = $this->socio_model->jqlistsociossuscritos(1, $datagrid, true);
         if ($count > 0) {
             $total_pages = ceil($count/$limit);
         } else {
-           $total_pages = 1; 
+           $total_pages = 1;
         }
         if ($page > $total_pages) { $page = $total_pages; }// $page = 0
         if ($page < 1) { $page = 1; }
-        
+
         $start = $limit * $page - $limit;
-        
-        $dataGrid['oderby'] = array('sidx' => $sidx, 'sord' => $sord);
-        $dataGrid['limit'] = $limit;
-        $dataGrid['start'] = $start;       
-        $result = $this->Socio_model->jqListSociosSuscritos(1, $dataGrid);
-        
+
+        $datagrid['oderby'] = array('sidx' => $sidx, 'sord' => $sord);
+        $datagrid['limit'] = $limit;
+        $datagrid['start'] = $start;
+        $result = $this->socio_model->jqlistsociossuscritos(1, $datagrid);
+
         $responce->page = $page;
         $responce->total = $total_pages;
         $responce->records = $count;
@@ -74,16 +77,16 @@ class Socio extends MY_Controller {
                 $row['observacion'],
                 // socio suscrito
                 $row['id_empresa_producto']);
-            $i++;        
+            $i++;
         }
-        
+
         $this->output->set_content_type('application/json');
-        $this->output->set_output(json_encode($responce));          
-        
-        
-        
-        
-        
+        $this->output->set_output(json_encode($responce));
+
+
+
+
+
         /*
         $array[] = array(
             'id' => 1,
@@ -95,42 +98,55 @@ class Socio extends MY_Controller {
         $array[] = array('id' => 2, 'first_name' => 'maria lopez', 'last_name' => 'lopez', 'sexo' => '1', 'email'=>'correo@mail.com');
         $array[] = array('id' => 3, 'first_name' => 'martin borge', 'last_name'=> 'ruiz', 'sexo' => '2', 'email'=>'correo@mail.com');
         $array[] = array('id' => 4, 'first_name' => 'juan reniro', 'last_name' => 'lirio', 'sexo' => '1', 'email'=>'correo@mail.com');
-        
+
         $array[] = array('id' => 5, 'first_name' => 'maribel rojas', 'last_name' => 'gimenez', 'sexo' => '1');
         $array[] = array('id' => 6, 'first_name' => 'stefany maride', 'last_name' => 'garza', 'sexo' => '1');
         $array[] = array('id' => 7, 'first_name' => 'robert linio', 'last_name' => 'roblez', 'sexo' => '1');
-        $array[] = array('id' => 8, 'first_name' => 'ricardo games', 'last_name' => 'castillo', 'sexo' => '1');        
-        
+        $array[] = array('id' => 8, 'first_name' => 'ricardo games', 'last_name' => 'castillo', 'sexo' => '1');
+
         $this->output->set_content_type('application/json');
-        $this->output->set_output(json_encode($array));*/      
+        $this->output->set_output(json_encode($array));*/
     }
-    
+
     public function add()
     {
         if ($this->input->post()) {
             //if ($this->input->post('token') == $this->session->userdata('token')) { }
             // session
             $usuario = $this->session->userdata('user');
-            
-            $dataSocio['id_usuario'] = $usuario['id'];
-            $dataSocio['first_name'] = $this->input->post('addSocio_first_name');
-            $dataSocio['last_name'] = $this->input->post('addSocio_last_name');
-            $dataSocio['sexo'] = $this->input->post('addSocio_sexo');
-            $dataSocio['email'] = $this->input->post('addSocio_email');
-            $dataSocio['celular'] = $this->input->post('addSocio_celular');
-            $dataSocio['direccion'] = $this->input->post('addSocio_direccion');
-            $dataSocio['observacion'] = $this->input->post('addSocio_observacion');
-            $dataSocio['created_at'] = date("Y-m-d h:i:s");            
-            $dataSocio['additional']['empresa_id'] = $usuario['empresa_id'];
-            
-                    
-            $this->load->model('Socio_model');
-            $this->Socio_model->add($dataSocio);
-            $this->cleanCache();
+
+            $datasocio['id_usuario'] = $usuario['id'];
+            $datasocio['first_name'] = $this->input->post('addsocio_first_name');
+            $datasocio['last_name'] = $this->input->post('addsocio_last_name');
+            $datasocio['sexo'] = $this->input->post('addsocio_sexo');
+            $datasocio['email'] = $this->input->post('addsocio_email');
+            $datasocio['celular'] = $this->input->post('addsocio_celular');
+            $datasocio['direccion'] = $this->input->post('addsocio_direccion');
+            $datasocio['observacion'] = $this->input->post('addsocio_observacion');
+            $datasocio['created_at'] = date("y-m-d h:i:s");
+            $datasocio['additional']['empresa_id'] = $usuario['empresa_id'];
+
+
+            $this->load->model('socio_model');
+            $this->socio_model->add($datasocio);
+            $this->cleancache();
             echo 1;
             //$this->output->set_content_type('application/json');
-            //$this->output->set_output(json_encode($arrayJson));            
-        }         
+            //$this->output->set_output(json_encode($arrayjson));
+        }
+    }
+
+    public function del()
+    {
+        $oper = $this->input->post('oper');
+        $id = $this->input->post('id');
+        if ( !empty($oper == 'oper') && !empty($id) ) {
+            $this->load->model('socio_model');
+            $this->socio_model->add($datasocio);
+            $dataUpdate = $data; //array('nombre' => $this->input->post('nombre'));
+            $this->db->update($this->_name, $dataUpdate);
+
+        }
     }
     
 }
