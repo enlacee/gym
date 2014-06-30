@@ -15,12 +15,23 @@ var socio = {};
     socio.param.gridBody = '#grid-table';
     socio.param.gridPage = '#grid-pager';
     socio.param.formAddSocio = '#formAddSocio';
+    socio.param.formEditSocio = '#formEditSocio';
+
+    socio.param.modalSuscribirse = '#myModalSuscribirse';
+    socio.param.formSuscribirse = '#formSuscribirse';    
+
 // object + class (ref prototype Constructor)
 socio.fn = function() {};
 
 socio.fn.prototype.init = function() { //console.log('socio',socio); //console.log('this',this);
     initModalNew();
+    initModalSuscribirse();
 
+    /**
+    * - Listener iniciar el modal Agregar nuevo socio
+    * - formulario desplegable (mas inputs)
+    * - formatear campos de telefono. (2)
+    */
     function initModalNew () {
 
         $(socio.param.modalNew).modal({
@@ -42,6 +53,38 @@ socio.fn.prototype.init = function() { //console.log('socio',socio); //console.l
         $('#addSocio_celular').mask('999-999-9?99');
         $('#celular').mask('999-999-9?99');
     };
+
+    /**
+    * Listener 
+    * Suscribirse ah 1 producto cambiando la interfaz del modal
+    * por cada accion (boton).
+    */
+    function initModalSuscribirse() {
+        // basic
+        $(socio.param.modalSuscribirse).modal({
+            keyboard: false, backdrop: 'static', show: false
+        });
+        // listener buttons : change data modal = .buttonSuscribirse
+        $('.buttonSuscribirse').click(function() {
+            var button = $(this);
+            var modal = $(socio.param.modalSuscribirse).find(socio.param.formSuscribirse).children();
+            var modal_sector_1 = modal.find('div .jumbotron h1');
+
+            var texto = button.text();
+            var nroDia = parseInt(button.attr('data-nrodia')); 
+            var subTexto = '<span class="label label-primary"> ';           
+            if (nroDia == 1) {
+                subTexto += nroDia + ' dia';
+            } else if (nroDia > 1) {
+                subTexto += nroDia + ' dias';
+            } else {
+                alert ("#404 definir nroDia");
+            }
+            subTexto += '</span>';
+            
+            modal_sector_1.html( texto + subTexto );
+        });
+    }
 }
 
 // load jqgrid
@@ -92,6 +135,9 @@ socio.fn.prototype.grid = function() {
             if(gsr){
                 $(this).jqGrid('GridToForm',gsr,"#formEditSocio");
                 $('#myTab li:eq(1) a').tab('show');
+
+                //
+                gridEditEvent(gsr);
             } else {
                 alert("Please select Row")
             }
@@ -180,7 +226,21 @@ socio.fn.prototype.grid = function() {
         }
     );
 
+    /**
+     *
+     * @param objSocio
+     * get nodes and operation into direction.
+     */
+    function gridEditEvent(objSocio) {
+        var nodes = $(socio.param.formEditSocio).children();
 
+        if (objSocio.id_empresa_producto > 0) {
+            //console.log('children',nodes[0]);
+            nodes[0].setAttribute('disabled','disabled');
+        } else {
+
+        }
+    }
 };
 
 socio.fn.prototype.validateNewSocio = function() {
@@ -260,3 +320,28 @@ var classSocio = new socio.fn();
 classSocio.init();
 classSocio.validateNewSocio();
 classSocio.grid();
+
+
+$( "#suscrip_fecha_inicio").datepicker({
+    showButtonPanel: true,
+    /*showOtherMonths: true,
+    selectOtherMonths: false,
+    //isRTL:true,    
+    changeMonth: true,
+    changeYear: true,
+    
+    showButtonPanel: true,
+    beforeShow: function() {
+        //change button colors
+        var datepicker = $(this).datepicker( "widget" );
+        setTimeout(function(){
+            var buttons = datepicker.find('.ui-datepicker-buttonpane')
+            .find('button');
+            buttons.eq(0).addClass('btn btn-xs');
+            buttons.eq(1).addClass('btn btn-xs btn-success');
+            buttons.wrapInner('<span class="bigger-110" />');
+        }, 0);
+    }*/
+
+});
+

@@ -1,25 +1,34 @@
                 <div class="row">
                     <form action="" id="formEditSocio" name="formEditSocio">
-                   
+
                         <fieldset>
                             id_empresa_producto<input type="text" name="id_empresa_producto" value=""/>
-                            
+
                             <div class="widget-main panel panel-primary padding-10">
                                 <ul class=" spaced list-inline">
-                                    <li><strong type="button" class="blue">Suscrito a:</strong></li>    
-                                    <li><button type="button" class="btn btn-xs btn-grey disabled">GYM 1DIA</button></li>
-                                    <li><button type="button" class="btn btn-xs btn-grey disabled ">GYM 1SEM</button></li>
-                                    <li><button type="button" class="btn btn-sm btn-primary ">GYM 1MES</button></li>
-                                    <li><button type="button" class="btn btn-xs btn-grey ">GYM 3MES</button></li>
-                                    <li><button type="button" class="btn btn-xs btn-grey ">GYM 6MES</button></li>
-                                    <li><button type="button" class="btn btn-xs btn-grey ">GYM 1AN</button></li>
+                                    <li><strong type="button" class="blue">Suscrito a:</strong></li>
+                                    <?php if (is_array($empresa_producto) && count($empresa_producto) > 0) : ?>
+                                        <?php foreach($empresa_producto as $array) : ?>
+                                            <?php $classButton = ($array['nro_dia'] == 30) ? 'btn btn-sm btn-primary' : 'btn btn-xs btn-grey'; ?>
+                                            <li><button type="button"
+                                                        value="<?php echo $array['id'] ?>"
+                                                        data-categoria="<?php echo $array['id_categoria'] ?>"
+                                                        data-periodo="<?php echo $array['id_periodo'] ?>"
+                                                        data-precio="<?php echo $array['precio'] ?>"
+                                                        data-nroDia="<?php echo $array['nro_dia'] ?>"
+                                                        data-toggle="modal" data-target="#myModalSuscribirse"
+                                                        class="buttonSuscribirse <?php echo $classButton ?>"><?php echo $array['nombre'] ?></button></li>
+                                        <?php endforeach;?>
+                                    <?php else : ?>
+                                        <li>No existen productos disponibles (configure esta opcion)!</li>
+                                    <?php endif;?>
                                 </ul>
-                            </div>                            
-                        </fieldset>                   
+                            </div>
+                        </fieldset>
 
-                    
+
                     <div class="col-md-6">
-                        
+
                         <div class="row form-group">
                             <div class="col-md-4 col-sm-2"><label>Nombres</label></div>
                             <div class="col-md-4 col-sm-5">
@@ -74,21 +83,21 @@
                                 <textarea id="observacion" name="observacion" class="form-control" ></textarea>
                             </div>
                         </div>
-                            
-                            
+
+
                             <div class="row"></div>
                             <div class="row"></div>
-                            <div class="row"></div>                        
+                            <div class="row"></div>
                     </div>
 
                     <div class="col-md-6">+</div>
-                    
+
                     <!-- floatando TOOL-->
                     <div class="tools">
-                        <div class="action-buttons bigger-125">           
-                            <button class="btn btn-danger no-radius"><i class="icon-save bigger-130"></i> Guardar</button>                
+                        <div class="action-buttons bigger-125">
+                            <button class="btn btn-danger no-radius"><i class="icon-save bigger-130"></i> Guardar</button>
                             <button type="button" class="btn btn-default no-radius">Cancelar</button>
                         </div>
-                    </div>                          
+                    </div>
                     </form>
                 </div>

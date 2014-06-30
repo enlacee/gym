@@ -47,7 +47,7 @@
                         </div>
 
                         <div id="profile" class="tab-pane itemdiv">
-                            <?php $this->load->view('dashboard/index/_formEditSocio.php'); ?>
+                            <?php $this->load->view('dashboard/index/_formEditSocio.php', $empresa_producto); ?>
                         </div>
 
                     </div>
@@ -66,6 +66,14 @@
     <div class="modal-dialog">
         <div class="modal-content col-md-12">
 <?php $this->load->view('dashboard/index/_formAddSocio.php'); ?>
+        </div>
+    </div>
+</div>
+<!-- modal suscribirse -->
+<div class="modal fade" id="myModalSuscribirse" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content col-md-12">
+<?php $this->load->view('dashboard/index/_suscribirse.php'); ?>
         </div>
     </div>
 </div>
