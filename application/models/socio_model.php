@@ -74,24 +74,23 @@ class Socio_model  extends CI_Model {
     
     /**
      * List of socios by IDUSUARIO
-     * @param type $dataGrid
-     * @param type $idUsuario
-     * @param type $num_rows
+     * @param array $dataGrid data for query
+     * @param int $idUsuario type user in session
+     * @param boolean $num_rows value for return count or data
      */
     public function jqListSociosSuscritos($idUsuario, $dataGrid, $num_rows = FALSE)
     {
         $rs = false;
         //$this->db->where("$this->_name.id_usuario", $idUsuario);
         
-        if(is_string($dataGrid) && !empty($dataGrid)) {
-            //$this->db->where('1=1'); 
-            $this->db->where($dataGrid);            
+        if (!empty($dataGrid) && is_string($dataGrid)) {
+            $this->db->where($dataGrid); //$this->db->where('1=1');
         } elseif (is_array($dataGrid)) {
             
             if (isset($dataGrid['string']) && !empty($dataGrid)) {
                $this->db->where($dataGrid['string']);
                
-            } else {                
+            } else {
                 if (isset($dataGrid['oderby'])) {
                     $sidx = $dataGrid['oderby']['sidx'];
                     $sord = $dataGrid['oderby']['sord'];                
@@ -114,14 +113,12 @@ class Socio_model  extends CI_Model {
         $query = $this->db->get();
 
         if ($num_rows === true) {
-            //$rs = $query->num_fields();
-            $rs = $query->num_rows();
+            $rs = $query->num_rows(); //$rs = $query->num_fields();
         } else {
             $rs = $query->result_array();
         }
         
-        return $rs;        
-        
+        return $rs;
     }
     
 }
