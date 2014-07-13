@@ -9,6 +9,7 @@
 // object
 var socio = {};
     socio.param = [];
+    socio.param.id = '#id';
     socio.param.modalNew = '#myModal';
     socio.param.modalNewButtonMore = '#linkMoreSocio';
     socio.param.tabPrincipal = '#myTab';
@@ -16,9 +17,10 @@ var socio = {};
     socio.param.gridPage = '#grid-pager';
     socio.param.formAddSocio = '#formAddSocio';
     socio.param.formEditSocio = '#formEditSocio';
+    socio.param.formSuscribirseSocio = '#formSuscribirseSocio';
+
 
     socio.param.modalSuscribirse = '#myModalSuscribirse';
-    socio.param.formSuscribirse = '#formSuscribirse';    
 
 // object + class (ref prototype Constructor)
 socio.fn = function() {};
@@ -67,11 +69,19 @@ socio.fn.prototype.init = function() { //console.log('socio',socio); //console.l
         // listener buttons : change data modal = .buttonSuscribirse
         $('.buttonSuscribirse').click(function() {
             var button = $(this);
-            var modal = $(socio.param.modalSuscribirse).find(socio.param.formSuscribirse).children();
+            var modal = $(socio.param.modalSuscribirse).find(socio.param.formSuscribirseSocio).children();
             var modal_sector_1 = modal.find('div .jumbotron h1');
+            var modal_sector_2 = modal.find('input#suscrip_idEmpresaProducto');
+            var modal_sector_3 = modal.find('span#suscrip_precio');
 
             var texto = button.text();
-            var nroDia = parseInt(button.attr('data-nrodia')); 
+            var nroDia = parseInt(button.attr('data-nrodia'));
+            var idEmpresaProducto = parseInt(button.attr('value'));
+            var precio = parseFloat(button.attr('data-precio'));
+            if (idEmpresaProducto <= 0|| precio<=0) {
+                alert("#404 idEmpresaProducto and idPeriodo");
+            }
+
             var subTexto = '<span class="label label-primary"> ';           
             if (nroDia == 1) {
                 subTexto += nroDia + ' dia';
@@ -83,6 +93,17 @@ socio.fn.prototype.init = function() { //console.log('socio',socio); //console.l
             subTexto += '</span>';
             
             modal_sector_1.html( texto + subTexto );
+            modal_sector_2.val(idEmpresaProducto);
+            modal_sector_3.html(precio);
+
+            var idSocio = parseInt($(socio.param.id).val());
+            if (idSocio > 0) {
+                $("#suscrip_idSocio").val(idSocio);
+            } else {
+                alert("seleccione un socio");
+            }
+
+            $('#suscrip_idSocio').val();
         });
     }
 }
@@ -105,9 +126,8 @@ socio.fn.prototype.grid = function() {
             {name:'direccion',index:'direccion', width:100, hidden:true},
             {name:'observacion',index:'observacion', width:100, hidden:true},
             {name:'fecha_registro',index:'fecha_registro', width:130, align:"right"},
-
             //socio suscrito
-            {name:'id_empresa_producto',index:'id_empresa_producto', width:130, align:"right", hidden:true},
+            {name:'id_empresa_producto',index:'id_empresa_producto', width:130, align:"right", hidden:true}
         ],
         rowNum:10,
         rowList:[10,20,30],
@@ -132,7 +152,7 @@ socio.fn.prototype.grid = function() {
             console.log(gsr)
             rowData = $(this).jqGrid("getRowData", id);
             console.log('rowData',rowData);
-            if(gsr){
+            if (gsr){
                 $(this).jqGrid('GridToForm',gsr,"#formEditSocio");
                 $('#myTab li:eq(1) a').tab('show');
 
@@ -141,7 +161,7 @@ socio.fn.prototype.grid = function() {
             } else {
                 alert("Please select Row")
             }
-        },
+        }
     });
 
 // -- nav
@@ -158,7 +178,7 @@ socio.fn.prototype.grid = function() {
             refresh: true,
             refreshicon: 'icon-refresh green',
             view: false,
-            viewicon: 'icon-zoom-in grey',
+            viewicon: 'icon-zoom-in grey'
         },
         {
             //edit record form
@@ -208,9 +228,8 @@ socio.fn.prototype.grid = function() {
             },
             afterRedraw: function() {
                 style_search_filters($(this));
-            }
-            ,
-            multipleSearch: false,
+            },
+            multipleSearch: false
             /**
              multipleGroup:true,
              showQuery: true
@@ -313,6 +332,78 @@ socio.fn.prototype.validateNewSocio = function() {
 }
 
 /**
+ * Register validation of socio
+ * when these is register
+ */
+socio.fn.prototype.validateSuscripcionSocio = function() {
+    $(socio.param.formSuscribirseSocio).validate({
+        errorElement: 'div',
+        errorClass: 'help-block',
+        focusInvalid: false,
+        invalidHandler: function (event, validator) { //display error alert on form submit
+            //$('.alert-danger', $('.login-form')).show();
+        },
+
+        highlight: function (e) {
+            $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+        },
+
+        success: function (e) {
+            $(e).closest('.form-group').removeClass('has-error').addClass('has-info');
+            $(e).remove();
+        },
+        errorPlacement: function (error, element) {
+            if(element.is(':checkbox') || element.is(':radio')) {
+                var controls = element.closest('div[class*="col-"]');
+                if(controls.find(':checkbox,:radio').length > 1) controls.append(error);
+                else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
+            }
+            else if(element.is('.select2')) {
+                error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
+            }
+            else if(element.is('.chosen-select')) {
+                error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
+            }
+            else {
+                error.insertAfter(element); //error.insertAfter(element.parent());
+            }
+        },
+        submitHandler: function (form) {
+            //console.log("form",form.children);
+            console.log("submit");
+            var obj = $(this);
+            //obj[0].currentForm[10].text("enviandooo");
+            $.ajax({
+                url: form.action,
+                type: form.method,
+                data: $(form).serialize(),
+                beforeSend: function() {
+                    //form.children[0].setAttribute("disabled","disabled");
+                    //obj[0].currentForm[10].innerHTML ="Enviando...";
+                },
+                success: function(response) {
+                    //$('#answers').html(response);
+                    /*if (response == 1) {
+                        form.children[0].removeAttribute('disabled');
+                        $('#myModal').modal('hide');
+                        form.reset();
+                        obj[0].currentForm[10].innerHTML ="Enviar";
+
+                        $(socio.param.gridBody).trigger("reloadGrid");
+                        bootbox.alert("Se Guardo correctamente!", function() {
+                            //Example.show("Hello world callback");
+                        });
+                    } else {
+                        alert("error request");
+                    }*/
+                }
+            });
+        },
+        invalidHandler: function (form) {
+        }
+    });
+}
+/**
  * Init Object and Functionalities
  * @type {socio.fn}
  */
@@ -320,16 +411,18 @@ var classSocio = new socio.fn();
 classSocio.init();
 classSocio.validateNewSocio();
 classSocio.grid();
+classSocio.validateSuscripcionSocio();
 
 
 $( "#suscrip_fecha_inicio").datepicker({
     showButtonPanel: true,
+    dateFormat: 'dd-mm-yy'
     /*showOtherMonths: true,
     selectOtherMonths: false,
-    //isRTL:true,    
+    //isRTL:true,
     changeMonth: true,
     changeYear: true,
-    
+
     showButtonPanel: true,
     beforeShow: function() {
         //change button colors

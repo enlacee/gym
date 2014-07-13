@@ -3,7 +3,12 @@
 /**
  * Class Socio
  */
-class socio extends my_controller {
+class Socio extends my_controller {
+
+    const ESTADO_ACTIVO = 1;
+    const ESTADO_AL_COBRO = 2;
+    const ESTADO_EN_MORA = 3;
+    const ESTADO_INACTIVO = 0;
 
     public function __construct()
     {
@@ -12,6 +17,7 @@ class socio extends my_controller {
 
         $this->load->model('socio_model');
         $this->load->model('Socio_Suscriptor_model');
+        $this->load->model('Empresa_producto_model');
     }
 
     public function index()
@@ -153,6 +159,64 @@ class socio extends my_controller {
         } else {
             echo "#404 exit"; exit;
         }
+    }
+
+    /**
+     * Function for subscribe user a one period (day.week, month, year)
+     */
+    public function suscripcion()
+    {
+        $return = FALSE;
+        if (isAjax() == TRUE && $this->input->post()) {
+            $fechaInicio = $this->input->post('suscrip_fecha_inicio');
+            $fechaInicio = getformatDateEsToEn($fechaInicio);
+            $idEmpresaProducto = $this->input->post('suscrip_idEmpresaProducto');
+            $idSocio = $this->input->post('suscrip_idSocio');
+
+            if ($idEmpresaProducto > 0 && $idSocio > 0 && $fechaInicio != FALSE) {
+                $dataEmpresa = $this->_getEmpresaProducto($idEmpresaProducto);
+
+                if (!empty($dataEmpresa['nro_dia'])) {
+                    $diasSuscripcion = $dataEmpresa['nro_dia'];
+                    $dias = new DateInterval("P{$diasSuscripcion}D");// dias $horas = new DateInterval("PT1H"); // horas
+                    //$fechaInicioDT = new DateTime($fechaInicio);
+                    $fechaInicioDTBase = getDateTime($fechaInicio);
+                    $fechaInicioDT = getDateTime($fechaInicio);
+                    $fechaFinDT = date_add($fechaInicioDT, $dias);
+
+                    $dataUpdate = array(
+                        'id' => ??????????,// id que se encuentra en el jqgrid (ID) $idSocio
+                        //'id_socio' => $idSocio,
+                        //'id_empresa' => $this->userId,
+                        'id_empresa_producto' => $idEmpresaProducto,
+                        'empresa_producto_precio' => $dataEmpresa['precio'],
+                        'pago' => 0,
+                        'adeuda' => 0,
+                        'fecha_inicio_base' => $fechaInicioDTBase->format('Y-m-d H:i:s'),
+                        'fecha_inicio' => $fechaInicioDTBase->format('Y-m-d H:i:s'),
+                        'fecha_fin' => $fechaFinDT->format('Y-m-d H:i:s'),
+                        'estado' => self::ESTADO_ACTIVO,
+                        'fecha_registro' => date('Y-m-d H:i:s')
+                    );
+
+                    echo "<hr>";
+                    var_dump($dataUpdate);
+
+                }
+            }
+        }
+
+    }
+
+    /***
+     * obtiner data o carateristicas del producto por id (empresa join empresa_producto)
+     * @param int id
+     * @retun data of product
+     */
+    private function _getEmpresaProducto($idEmpresaProducto)
+    {
+        $data = $this->Empresa_producto_model->selectByEmpresa($this->userId, $idEmpresaProducto);
+        return empty($data[0]) ? FALSE : $data[0];
     }
     
 }

@@ -2,8 +2,11 @@
                     <form action="" id="formEditSocio" name="formEditSocio">
 
                         <fieldset>
+                            Producto comprado
+                            <br>
                             id_empresa_producto<input type="text" name="id_empresa_producto" value=""/>
 
+                            id<input type="text" name="id" id="id" value=""/>
                             <div class="widget-main panel panel-primary padding-10">
                                 <ul class=" spaced list-inline">
                                     <li><strong type="button" class="blue">Suscrito a:</strong></li>

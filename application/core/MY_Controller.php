@@ -95,7 +95,7 @@ class MY_Controller extends CI_Controller {
     private function dependencias()
     {
         $this->load->library(array('layout', 'auth','breadcrumb'));        
-        $this->load->helper(array('ayuda_helper', 'url', 'form'));
+        $this->load->helper(array('ayuda_helper', 'url', 'form', 'date'));
         //$this->output->enable_profiler(TRUE);
         $this->load->driver('cache');
 

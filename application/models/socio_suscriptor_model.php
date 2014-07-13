@@ -49,4 +49,18 @@ class Socio_Suscriptor_model  extends CI_Model {
         
         return $rs;
     }
+
+    /**
+     * Solo necesita idSocioSuscriptor para actualizar (ac_socios_suscriptores.id)
+     * @param int $id
+     * @param array $data
+     * @return boolean true or false if success
+     */
+    public function updateSocioSuscriptor($id, $data)
+    {
+        $where = "id = " . $id;
+        $dataUpdate = array('nombre' => $this->input->post('nombre'));
+        //$this->db->update( 'ac_variables', $dataUpdate, $where);
+
+    }
 }

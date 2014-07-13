@@ -1,11 +1,45 @@
 <?php
+/*
 if ( ! function_exists('date_add')){
      function date_add($givendate,$day=0,$mth=0,$yr=0) {
          $cd = strtotime($givendate);
          return date('Y-m-d', mktime(date('h',$cd), date('i',$cd), date('s',$cd), date('m',$cd)+$mth,  date('d',$cd)+$day, date('Y',$cd)+$yr));
      }
 }
-/* calcular la diferencia entre dos fechas */
+*/
+
+
+if ( ! function_exists('getformatDateEsToEn')){
+    function getformatDateEsToEn($dateString)
+    {
+        $rs = FALSE;
+        if (preg_match("/^[0-9]{2}-[0-9]{2}-[0-9]{4}$/", $dateString)) { // ES
+            $dateArray = preg_split('/-/',$dateString);
+            $rs = $dateArray[2].'-'.$dateArray[1].'-'.$dateArray[0];
+        } elseif (preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/", $dateString)) {
+            $rs = $dateString;
+        }
+
+        return $rs;
+    }
+}
+
+/**
+ * @param String format datetime 'Y-m-d'
+ * @return DateTime
+ */
+if ( ! function_exists('getDatetime')){
+    function getDateTime($dateString)
+    {
+        $array = preg_split('/-/',$dateString);
+        $date = new DateTime();
+        $date->setDate($array[0], $array[1],$array[2]);
+
+        return $date;
+    }
+}
+
+/* calcular la diferencia entre dos fechas
 if ( ! function_exists('date_diff')){
      function date_diff($start_date,$end_date,$format = 'd'){
          $start_date = strtotime($start_date);
@@ -36,8 +70,11 @@ if ( ! function_exists('date_diff')){
                  return floor(($end_date-$start_date)/86400);
             }
      }
-}
-/* conocer la hora exacta de un determinado timezone */
+}*/
+
+
+
+/* conocer la hora exacta de un determinado timezone
 if ( ! function_exists('get_date')){
      function get_date($timezone = 'America/New_York', $full_date_time = false){
            date_default_timezone_set($timezone);
@@ -62,8 +99,8 @@ if ( ! function_exists('human_to_mysql')){
 }
 if ( ! function_exists('dia_semana')){
     function dia_semana($dia_semana) {
-        /*$dias = array('Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado');
-        return $dias[date("w", mktime(0, 0, 0, $mes, $dia, $ano))];*/
+        //$dias = array('Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado');
+        //return $dias[date("w", mktime(0, 0, 0, $mes, $dia, $ano))];
          $dia_semana=(int) $dia_semana;
          $dia_sema_textual='';
 
@@ -102,5 +139,5 @@ if ( ! function_exists('mes_textual')){
          }
          return $mes_textual;
     }
-}
-?>
+}*/
+
