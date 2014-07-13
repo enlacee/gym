@@ -45,7 +45,10 @@ class socio extends my_controller {
             }
         }
 
+        $datagrid['oderby'] = array('sidx' => $sidx, 'sord' => $sord);
+        $datagrid['limit'] = $limit;
         $count = $this->socio_model->jqlistsociossuscritos(1, $datagrid, true);
+
         if ($count > 0) {
             $total_pages = ceil($count/$limit);
         } else {
@@ -55,9 +58,6 @@ class socio extends my_controller {
         if ($page < 1) { $page = 1; }
 
         $start = $limit * $page - $limit;
-
-        $datagrid['oderby'] = array('sidx' => $sidx, 'sord' => $sord);
-        $datagrid['limit'] = $limit;
         $datagrid['start'] = $start;
         $result = $this->socio_model->jqlistsociossuscritos(1, $datagrid);
 
@@ -116,16 +116,16 @@ class socio extends my_controller {
             $usuario = $this->getUserSession();
 
             $datasocio['id_usuario'] = $usuario['id'];
-            $datasocio['first_name'] = $this->input->post('addsocio_first_name');
-            $datasocio['last_name'] = $this->input->post('addsocio_last_name');
-            $datasocio['sexo'] = $this->input->post('addsocio_sexo');
-            $datasocio['email'] = $this->input->post('addsocio_email');
-            $datasocio['celular'] = $this->input->post('addsocio_celular');
-            $datasocio['direccion'] = $this->input->post('addsocio_direccion');
-            $datasocio['observacion'] = $this->input->post('addsocio_observacion');
+            $datasocio['first_name'] = $this->input->post('addSocio_first_name');
+            $datasocio['last_name'] = $this->input->post('addSocio_last_name');
+            $datasocio['sexo'] = $this->input->post('addSocio_sexo');
+            $datasocio['email'] = $this->input->post('addSocio_email');
+            $datasocio['celular'] = $this->input->post('addSocio_celular');
+            $datasocio['direccion'] = $this->input->post('addSocio_direccion');
+
             $datasocio['created_at'] = date("y-m-d h:i:s");
             $datasocio['additional']['empresa_id'] = $usuario['empresa_id'];
-
+            $datasocio['additional']['observacion'] = $this->input->post('addSocio_observacion');
 
             $this->load->model('socio_model');
             $this->socio_model->add($datasocio);
@@ -151,7 +151,7 @@ class socio extends my_controller {
                     1);
 
         } else {
-            echo "exit"; exit;
+            echo "#404 exit"; exit;
         }
     }
     
