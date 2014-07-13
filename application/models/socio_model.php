@@ -16,7 +16,7 @@ class Socio_model  extends CI_Model {
             $this->db->trans_begin();
             try {
                 // 01 insert socio                
-                $socioSuscrito = $data['additional'];
+                $socioSuscrito = $data['additional'];                
                 unset($data['additional']);
                 $this->db->insert($this->_name, $data);
                 $idSocio = $this->db->insert_id();
@@ -25,6 +25,7 @@ class Socio_model  extends CI_Model {
                 if (isset($socioSuscrito) && isset($socioSuscrito['empresa_id']) ) {
                     $data2['id_socio'] = $idSocio;
                     $data2['id_empresa'] = $socioSuscrito['empresa_id'];
+                    $data2['observacion'] = $socioSuscrito['observacion'];                    
                     $this->db->insert('ac_socios_suscriptores', $data2);
                 }           
                 $this->db->trans_commit();
@@ -97,7 +98,7 @@ class Socio_model  extends CI_Model {
                     $this->db->order_by($sidx, $sord); 
                 }            
                 if (isset($dataGrid['limit'])) {
-                    if ($dataGrid['limit'] && $dataGrid['start']) {
+                    if (!empty($dataGrid['limit']) && !empty($dataGrid['start'])) {
                         $this->db->limit($dataGrid['limit'], $dataGrid['start']);
                     }else {
                         $this->db->limit($dataGrid['limit']);
@@ -106,7 +107,7 @@ class Socio_model  extends CI_Model {
             }
         }
         
-        $this->db->select("$this->_name.*, ac_socios_suscriptores.id_empresa_producto");
+        $this->db->select("$this->_name.*, ac_socios_suscriptores.id_empresa_producto, ac_socios_suscriptores.observacion");
         $this->db->from($this->_name);
         $this->db->join("ac_socios_suscriptores", "$this->_name.id = ac_socios_suscriptores.id_socio");
         $this->db->where('ac_socios_suscriptores.baja', 0);
