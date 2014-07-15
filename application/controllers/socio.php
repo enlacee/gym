@@ -72,9 +72,9 @@ class Socio extends my_controller {
         $responce->records = $count;
         $i = 0;
         while (list($clave, $row) = each($result)) {
-            $responce->rows[$i]['id'] = $row['id'];
+            $responce->rows[$i]['id'] = $row['id_socio_suscriptor'];
             $responce->rows[$i]['cell'] = array(
-                $row['id'],
+                $row['id_socio_suscriptor'],
                 $row['first_name'],
                 $row['last_name'],
                 $row['sexo'],
@@ -83,6 +83,7 @@ class Socio extends my_controller {
                 $row['direccion'],
                 $row['observacion'],
                 // socio suscrito
+                $row['fecha_registro'],
                 $row['id_empresa_producto']);
             $i++;
         }
@@ -185,7 +186,7 @@ class Socio extends my_controller {
                     $fechaFinDT = date_add($fechaInicioDT, $dias);
 
                     $dataUpdate = array(
-                        'id' => ??????????,// id que se encuentra en el jqgrid (ID) $idSocio
+                        'id' => $idSocio,// id que se encuentra en el jqgrid (ID) $idSocio
                         //'id_socio' => $idSocio,
                         //'id_empresa' => $this->userId,
                         'id_empresa_producto' => $idEmpresaProducto,

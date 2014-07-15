@@ -10,6 +10,7 @@
 var socio = {};
     socio.param = [];
     socio.param.id = '#id';
+    socio.param.socioSuscriptorId = '#ac_socios_suscriptores.id';
     socio.param.modalNew = '#myModal';
     socio.param.modalNewButtonMore = '#linkMoreSocio';
     socio.param.tabPrincipal = '#myTab';
@@ -96,7 +97,9 @@ socio.fn.prototype.init = function() { //console.log('socio',socio); //console.l
             modal_sector_2.val(idEmpresaProducto);
             modal_sector_3.html(precio);
 
-            var idSocio = parseInt($(socio.param.id).val());
+            var idSc = socio.param.socioSuscriptorId.replace('#','');
+            var idSocio = parseInt(document.getElementById(idSc).value);
+
             if (idSocio > 0) {
                 $("#suscrip_idSocio").val(idSocio);
             } else {
@@ -115,24 +118,24 @@ socio.fn.prototype.grid = function() {
         url:'socio/listGrid',
         datatype: "json",
         colNames:['id','nombre', 'apellido', 'sexo','celular','mail','direccion','nota','Fecha registro',
-            'uno'],
+            'id_empresa_producto'],
         colModel:[
-            {name:'id',index:'id', width:55, search:false},
-            {name:'first_name',index:'first_name', width:150, editable:true},
-            {name:'last_name',index:'last_name', width:100, editable:true},
-            {name:'sexo',index:'sexo', width:100},
+            {name:'ac_socios_suscriptores.id',index:'ac_socios_suscriptores.id', width:55, search:false},
+            {name:'first_name',index:'first_name', width:130, editable:true},
+            {name:'last_name',index:'last_name', width:130, editable:true},
+            {name:'sexo',index:'sexo', width:50},
             {name:'celular',index:'celular', width:100, hidden:true},
             {name:'email',index:'email', width:100, hidden:true},
             {name:'direccion',index:'direccion', width:100, hidden:true},
             {name:'observacion',index:'observacion', width:100, hidden:true},
-            {name:'fecha_registro',index:'fecha_registro', width:130, align:"right"},
+            {name:'fecha_registro',index:'fecha_registro', width:120, align:"right"},
             //socio suscrito
             {name:'id_empresa_producto',index:'id_empresa_producto', width:130, align:"right", hidden:true}
         ],
         rowNum:10,
         rowList:[10,20,30],
         pager: socio.param.gridPage,
-        sortname: 'id',
+        sortname: 'ac_socios_suscriptores.id',
         viewrecords: true,
         sortorder: "desc",
         editurl:'socio/del',
@@ -156,8 +159,10 @@ socio.fn.prototype.grid = function() {
                 $(this).jqGrid('GridToForm',gsr,"#formEditSocio");
                 $('#myTab li:eq(1) a').tab('show');
 
+                // disabled
+                $(socio.param.formEditSocio).children()[0].removeAttribute('disabled');
                 //
-                gridEditEvent(gsr);
+                gridEditEvent(rowData);
             } else {
                 alert("Please select Row")
             }
@@ -251,13 +256,11 @@ socio.fn.prototype.grid = function() {
      * get nodes and operation into direction.
      */
     function gridEditEvent(objSocio) {
-        var nodes = $(socio.param.formEditSocio).children();
-
-        if (objSocio.id_empresa_producto > 0) {
-            //console.log('children',nodes[0]);
-            nodes[0].setAttribute('disabled','disabled');
+        var button = $(socio.param.formEditSocio).children().children('div:first').find('button');
+        if (parseInt(objSocio.id_empresa_producto) > 0) {
+            button.addClass('disabled'); //console.log('button',button);
         } else {
-
+            button.removeClass('disabled');
         }
     }
 };

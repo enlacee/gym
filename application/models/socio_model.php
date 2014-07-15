@@ -105,8 +105,13 @@ class Socio_model  extends CI_Model {
                 }   
             }
         }
-        
-        $this->db->select("$this->_name.*, ac_socios_suscriptores.id_empresa_producto, ac_socios_suscriptores.observacion");
+
+        $tb1 = 'ac_socios_suscriptores';
+        $stringSql = "$this->_name.first_name, $this->_name.last_name, $this->_name.sexo, $this->_name.celular, "
+            . "$this->_name.email, $this->_name.direccion, $tb1.observacion, $tb1.fecha_registro, "
+            . "$tb1.id_empresa_producto, $tb1.id AS id_socio_suscriptor ";
+
+        $this->db->select($stringSql);
         $this->db->from($this->_name);
         $this->db->join("ac_socios_suscriptores", "$this->_name.id = ac_socios_suscriptores.id_socio");
         $this->db->where('ac_socios_suscriptores.baja', 0);

@@ -1,8 +1,6 @@
-CREATE DATABASE  IF NOT EXISTS `ac_gym` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */;
-USE `ac_gym`;
 -- MySQL dump 10.13  Distrib 5.5.37, for debian-linux-gnu (x86_64)
 --
--- Host: 127.0.0.1    Database: ac_gym
+-- Host: localhost    Database: ac_gym
 -- ------------------------------------------------------
 -- Server version	5.5.37-0ubuntu0.13.10.1
 
@@ -93,7 +91,7 @@ CREATE TABLE `ac_empresa_productos` (
   CONSTRAINT `ac_empresa_productos_ibfk_1` FOREIGN KEY (`id_empresa`) REFERENCES `ac_empresas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_ac_empresa_productos_ac_categoria1` FOREIGN KEY (`id_categoria`) REFERENCES `ac_categorias` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_ac_empresa_productos_ac_periodo1` FOREIGN KEY (`id_periodo`) REFERENCES `ac_periodos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -102,6 +100,7 @@ CREATE TABLE `ac_empresa_productos` (
 
 LOCK TABLES `ac_empresa_productos` WRITE;
 /*!40000 ALTER TABLE `ac_empresa_productos` DISABLE KEYS */;
+INSERT INTO `ac_empresa_productos` VALUES (1,1,'GYM 1DIA',1,2,5),(2,1,'GYM 1SEM',1,3,35),(3,1,'GYM 1MES',1,4,150),(4,1,'GYM 3MES',1,5,450),(5,1,'GYM 6MES',1,6,900),(6,1,'GYM 1AN',1,7,1500);
 /*!40000 ALTER TABLE `ac_empresa_productos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -134,7 +133,7 @@ CREATE TABLE `ac_empresas` (
 
 LOCK TABLES `ac_empresas` WRITE;
 /*!40000 ALTER TABLE `ac_empresas` DISABLE KEYS */;
-INSERT INTO `ac_empresas` VALUES (1,1,'EMPRESA 01','RUC','1045269187',0,1,'2014-06-16 00:00:00',NULL),(2,NULL,'EMPRESA 02','RUC','10452699887',0,0,'2014-06-16 00:00:00',NULL);
+INSERT INTO `ac_empresas` VALUES (1,1,'EMPRESA 01','RUC','1045269187',1,1,'2014-06-16 00:00:00',NULL),(2,NULL,'EMPRESA 02','RUC','10452699887',0,0,'2014-06-16 00:00:00',NULL);
 /*!40000 ALTER TABLE `ac_empresas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -150,7 +149,7 @@ CREATE TABLE `ac_logs` (
   `message` text COLLATE utf8_unicode_ci,
   `date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -159,7 +158,7 @@ CREATE TABLE `ac_logs` (
 
 LOCK TABLES `ac_logs` WRITE;
 /*!40000 ALTER TABLE `ac_logs` DISABLE KEYS */;
-INSERT INTO `ac_logs` VALUES (1,'Empresa Instalado: id [id_empresa]1','2014-06-18 02:13:02'),(2,'Empresa Instalado: ac_empresas [id_empresa] = 1','2014-06-18 02:18:26'),(3,'Empresa Instalado: ac_empresas [id_empresa] = 1','2014-06-18 02:22:30');
+INSERT INTO `ac_logs` VALUES (1,'Empresa Instalado: id [id_empresa]1','2014-06-18 02:13:02'),(2,'Empresa Instalado: ac_empresas [id_empresa] = 1','2014-06-18 02:18:26'),(3,'Empresa Instalado: ac_empresas [id_empresa] = 1','2014-06-18 02:22:30'),(4,'Empresa Instalado: ac_empresas [id_empresa] = 1','2014-07-13 00:01:24');
 /*!40000 ALTER TABLE `ac_logs` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -263,7 +262,7 @@ CREATE TABLE `ac_periodos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(20) DEFAULT NULL,
   `nombre_corto` varchar(5) DEFAULT NULL,
-  `dia` int(11) DEFAULT NULL,
+  `nro_dia` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='- 1 = ninguno\n- 2 = 1dia\n- 3 = 1semana\n- 4 = 1mes\n- 5 = 3meses\n- 6 = 6meses\n- 7 = 1año';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -274,7 +273,7 @@ CREATE TABLE `ac_periodos` (
 
 LOCK TABLES `ac_periodos` WRITE;
 /*!40000 ALTER TABLE `ac_periodos` DISABLE KEYS */;
-INSERT INTO `ac_periodos` VALUES (1,'-','-',0),(2,'1 DIA','1DIA',1),(3,'1 SEMANA','1SEM',7),(4,'1 MES','1MES',30),(5,'3 MESES','3MES',90),(6,'6 MESES','6MES',180),(7,'1 AÑO','1AÑO',360);
+INSERT INTO `ac_periodos` VALUES (1,'-','-',NULL),(2,'1 DIA','1DIA',1),(3,'1 SEMANA','1SEM',7),(4,'1 MES','1MES',30),(5,'3 MESES','3MES',90),(6,'6 MESES','6MES',180),(7,'1 AÑO','1AÑO',365);
 /*!40000 ALTER TABLE `ac_periodos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -294,7 +293,6 @@ CREATE TABLE `ac_socios` (
   `celular` varchar(10) DEFAULT NULL,
   `email` varchar(40) DEFAULT NULL,
   `direccion` varchar(200) DEFAULT NULL,
-  `observacion` text,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -309,7 +307,7 @@ CREATE TABLE `ac_socios` (
 
 LOCK TABLES `ac_socios` WRITE;
 /*!40000 ALTER TABLE `ac_socios` DISABLE KEYS */;
-INSERT INTO `ac_socios` VALUES (1,1,'MARIO','ROJAS','M','958458458','mario_rojas@hotmail.com','direccion mario rojas','sin observacion','2014-06-16 00:00:00',NULL),(2,1,'MARIA','ROBLES','F','989658547','robles@gmail.com','sin direccion maria','recien salido de una operacion del pulmon.','2014-06-16 00:00:00',NULL);
+INSERT INTO `ac_socios` VALUES (1,1,'MARIO','ROJAS','M','958458458','mario_rojas@hotmail.com','direccion mario rojas','2014-06-16 00:00:00',NULL),(2,1,'MARIA','ROBLES','F','989658547','robles@gmail.com','sin direccion maria','2014-06-16 00:00:00',NULL);
 /*!40000 ALTER TABLE `ac_socios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -328,19 +326,21 @@ CREATE TABLE `ac_socios_suscriptores` (
   `empresa_producto_precio` double DEFAULT NULL,
   `pago` double DEFAULT NULL,
   `adeuda` double DEFAULT NULL,
-  `fecha_inicio` varchar(45) DEFAULT NULL,
-  `fecha_fin` varchar(45) DEFAULT NULL,
+  `fecha_inicio_base` datetime DEFAULT NULL COMMENT '''nunca se cambia edita : util para calular tiempos con fecha_final u otra''',
+  `fecha_inicio` datetime DEFAULT NULL,
+  `fecha_fin` datetime DEFAULT NULL,
   `observacion` text,
-  `estado` int(1) DEFAULT NULL,
+  `baja` int(1) DEFAULT '0' COMMENT '0= OFF : 1= ON',
+  `estado` int(1) DEFAULT NULL COMMENT '1 = ACTIVO 2 = AL COBRO 3 = EN MORA 0 = INACTIVO',
   `fecha_registro` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_ac_suscriptores_ac_empresa_productos1_idx` (`id_empresa_producto`),
   KEY `fk_ac_suscriptores_ac_socios1_idx` (`id_socio`),
   KEY `fk_ac_socios_suscriptores_ac_empresas1_idx` (`id_empresa`),
-  CONSTRAINT `ac_socios_suscriptores_ibfk_3` FOREIGN KEY (`id_empresa_producto`) REFERENCES `ac_empresa_productos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `ac_socios_suscriptores_ibfk_1` FOREIGN KEY (`id_socio`) REFERENCES `ac_socios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `ac_socios_suscriptores_ibfk_2` FOREIGN KEY (`id_empresa`) REFERENCES `ac_empresas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='empresa_producto_precio : procio a la mano.\nestado : \n1 = ACTIVO\n2 = AL COBRO\n3 = EN MORA\n4 = INACTIVO';
+  CONSTRAINT `ac_socios_suscriptores_ibfk_2` FOREIGN KEY (`id_empresa`) REFERENCES `ac_empresas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `ac_socios_suscriptores_ibfk_3` FOREIGN KEY (`id_empresa_producto`) REFERENCES `ac_empresa_productos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='empresa_producto_precio : procio a la mano.estado : 1 = ACTIVO2 = AL COBRO3 = EN MORA4 = INACTIVO';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -349,8 +349,36 @@ CREATE TABLE `ac_socios_suscriptores` (
 
 LOCK TABLES `ac_socios_suscriptores` WRITE;
 /*!40000 ALTER TABLE `ac_socios_suscriptores` DISABLE KEYS */;
-INSERT INTO `ac_socios_suscriptores` VALUES (1,1,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2,2,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `ac_socios_suscriptores` VALUES (1,1,1,3,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL),(2,2,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL);
 /*!40000 ALTER TABLE `ac_socios_suscriptores` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `ac_socios_suscriptores_records`
+--
+
+DROP TABLE IF EXISTS `ac_socios_suscriptores_records`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `ac_socios_suscriptores_records` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `empresa_producto_precio` double DEFAULT NULL,
+  `pago` double DEFAULT NULL,
+  `adeuda` double DEFAULT NULL,
+  `fecha_inicio` datetime DEFAULT NULL,
+  `fecha_fin` datetime DEFAULT NULL,
+  `observacion` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='registros historicos  de la taba : ac_socios_suscriptores \nmetodo chamilo';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `ac_socios_suscriptores_records`
+--
+
+LOCK TABLES `ac_socios_suscriptores_records` WRITE;
+/*!40000 ALTER TABLE `ac_socios_suscriptores_records` DISABLE KEYS */;
+/*!40000 ALTER TABLE `ac_socios_suscriptores_records` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -490,7 +518,7 @@ CREATE TABLE `ci_sessions` (
 
 LOCK TABLES `ci_sessions` WRITE;
 /*!40000 ALTER TABLE `ci_sessions` DISABLE KEYS */;
-INSERT INTO `ci_sessions` VALUES ('b28b40614d70b07a758000ca0caef6ae','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.114 Safari/537.36',1403076201,'a:3:{s:9:\"user_data\";s:0:\"\";s:5:\"token\";s:32:\"41e90ebd45dfafbc1c0457c79935994e\";s:4:\"user\";a:16:{s:2:\"id\";s:1:\"1\";s:10:\"first_name\";s:7:\"ROBERTO\";s:9:\"last_name\";s:5:\"RONEY\";s:5:\"email\";s:14:\"root@gmail.com\";s:8:\"password\";s:6:\"123456\";s:4:\"salt\";N;s:10:\"created_at\";s:19:\"2014-06-16 00:00:00\";s:10:\"updated_at\";N;s:6:\"status\";s:1:\"1\";s:10:\"empresa_id\";s:1:\"1\";s:14:\"empresa_nombre\";s:10:\"EMPRESA 01\";s:20:\"empresa_numDocumento\";s:10:\"1045269187\";s:22:\"empresa_tipo_documento\";s:3:\"RUC\";s:19:\"empresa_instalacion\";s:1:\"1\";s:14:\"empresa_status\";s:1:\"1\";s:30:\"empresa_fecha_inicio_membresia\";N;}}');
+INSERT INTO `ci_sessions` VALUES ('1321bebb688b616b5b299f641db9c8b4','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.153 Safari/537.36',1405404106,'a:3:{s:9:\"user_data\";s:0:\"\";s:5:\"token\";s:32:\"48289571c1bdff22ff28e851de666ae2\";s:4:\"user\";a:16:{s:2:\"id\";s:1:\"1\";s:10:\"first_name\";s:7:\"ROBERTO\";s:9:\"last_name\";s:5:\"RONEY\";s:5:\"email\";s:14:\"root@gmail.com\";s:8:\"password\";s:6:\"123456\";s:4:\"salt\";N;s:10:\"created_at\";s:19:\"2014-06-16 00:00:00\";s:10:\"updated_at\";N;s:6:\"status\";s:1:\"1\";s:10:\"empresa_id\";s:1:\"1\";s:14:\"empresa_nombre\";s:10:\"EMPRESA 01\";s:20:\"empresa_numDocumento\";s:10:\"1045269187\";s:22:\"empresa_tipo_documento\";s:3:\"RUC\";s:19:\"empresa_instalacion\";s:1:\"1\";s:14:\"empresa_status\";s:1:\"1\";s:30:\"empresa_fecha_inicio_membresia\";N;}}');
 /*!40000 ALTER TABLE `ci_sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -503,4 +531,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-06-18  2:50:53
+-- Dump completed on 2014-07-15  1:13:05
