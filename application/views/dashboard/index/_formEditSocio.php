@@ -86,7 +86,13 @@
                                 <div class="row"></div>
                             </div>
 
-                            <div class="col-md-6">+</div>
+                            <div class="col-md-6">
+                                + time rest :
+                                <h2>Countdown with callback</h2>
+                                <p>Click on the green box to reset the counter to 10 sec.</p>
+                                <div class="countdown callback"></div>
+
+                            </div>
 
                             <!-- floatando TOOL-->
                             <div class="tools">

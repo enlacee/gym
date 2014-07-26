@@ -441,3 +441,23 @@ $( "#suscrip_fecha_inicio").datepicker({
 
 });
 
+
+//test timer
+$(function () {
+    $('.countdown.callback').countdown({
+        date: +(new Date) + 10000,
+        render: function(data) {
+            var stringTime = data.days + " days "+
+            this.leadingZeros(data.hours, 2) + " hours "+
+            this.leadingZeros(data.min, 2) + " min "+
+            this.leadingZeros(data.sec, 2) + " sec";
+            $(this.el).text(stringTime);
+        },
+        onEnd: function() {
+            $(this.el).addClass('ended');
+        }
+    }).on("click", function() {
+        $(this).removeClass('ended').data('countdown').update(+(new Date) + 10000).start();
+    });
+});
+

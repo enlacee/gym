@@ -31,6 +31,8 @@ class Dashboard extends MY_Controller {
         // jquery -ui (calendar) (estos (2)plugin pueden ser cambiado solo existe 1 utilidad en modal suscripcion)
         $this->loadStatic(array('js' => '/js/jquery-ui-1.10.3.full.min.js'));
         $this->loadStatic(array('js' => '/js/jquery.ui.touch-punch.min.js'));
+        // timer
+        $this->loadStatic(array('js' => '/js/application/plugin/countdown/jquery.countdown.js'));
 
         $this->loadStatic(array('js' => '/js/application/dashboard/index.js'));
 
