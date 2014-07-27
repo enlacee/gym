@@ -282,8 +282,14 @@ socio.fn.prototype.grid = function() {
         var dateTimeFinal = new Date(objSocio.fecha_fin);
         var dateTimeInicio = new Date(objSocio.fecha_inicio);
 
+        console.log ("------------------------------------");
+        console.log ("debuger in FIREFOX AND CHORME FECHAS");
+        console.log ("------------------------------------");
+        console.log('dateTimeInicio',dateTimeInicio.getDate());
+        console.log('dateTimeFinal',dateTimeFinal.getDate());
+
         if (!isNaN(dateTimeFinal) && !isNaN(dateTimeInicio)) { // fechas validas
-            if (dateTimeFinal > dateTimeInicio) {
+            if (dateTimeFinal > dateTimeInicio) { console.log('ok timer');
                 $('.countdown.callback').show().removeClass('ended').data('countdown').update(dateTimeFinal).start();
             } else if (dateTimeFinal.getMilliseconds() === dateTimeInicio.getMilliseconds()) {
                 $('.countdown.callback').data('countdown').stop(); console.log('timer ==');
@@ -292,7 +298,7 @@ socio.fn.prototype.grid = function() {
                 $('.countdown.callback').data('countdown').stop(); console.log('timer menor');
                 $('.countdown.callback').hide();
             }
-        } else {
+        } else { console.log('is nan ELSE');
             $('.countdown.callback').hide();
         }
     }
