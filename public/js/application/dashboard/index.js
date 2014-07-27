@@ -419,7 +419,8 @@ classSocio.validateSuscripcionSocio();
 
 $( "#suscrip_fecha_inicio").datepicker({
     showButtonPanel: true,
-    dateFormat: 'dd-mm-yy'
+    dateFormat: 'dd-mm-yy',
+    minDate: 0, maxDate: "+0M +2D"
     /*showOtherMonths: true,
     selectOtherMonths: false,
     //isRTL:true,
