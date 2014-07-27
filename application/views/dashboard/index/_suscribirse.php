@@ -1,4 +1,4 @@
-<form action="socio/suscripcion" name="formSuscribirseSocio" id="formSuscribirseSocio" method="POST">
+<form action="<?php echo base_url('socio/suscripcion') ?>" name="formSuscribirseSocio" id="formSuscribirseSocio" method="POST">
     <fieldset name="fset_formSuscribirseSocio" id="fset_formSuscribirseSocio">
         <input type="hidden" name="suscrip_idSocio" id="suscrip_idSocio" value=""/>
         <input type="hidden" name="suscrip_idEmpresaProducto" id="suscrip_idEmpresaProducto" value=""/>

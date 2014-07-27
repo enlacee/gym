@@ -56,20 +56,23 @@ class Socio_model  extends CI_Model {
     
     /**
      * Update
-     * @param Integer $id
      * @param Array $data
      * @return boolean
      */
-    public function update($id, $data = array())
+    public function update($data = array())
     {
-        if (!empty($id)) {
-            $this->db->where('id', $id);
-            if(is_array($data) && count($data) > 0 ) {
-                $dataUpdate = $data; //array('nombre' => $this->input->post('nombre'));
-                $this->db->update($this->_name, $dataUpdate);
-                return true;
-            }            
+        $rs = FALSE;
+        $id = !empty($data['id']) ? $data['id'] : FALSE;
+        unset($data['id']);
+
+        $arrayWhere = array('id' => $id);
+        if(is_array($data) && count($data) > 0 ) {
+            $this->db->where($arrayWhere);
+            $this->db->update($this->_name, $data);
+            $rs = TRUE;
         }
+
+        return $rs;
     }
     
     /**
@@ -107,9 +110,11 @@ class Socio_model  extends CI_Model {
         }
 
         $tb1 = 'ac_socios_suscriptores';
-        $stringSql = "$this->_name.first_name, $this->_name.last_name, $this->_name.sexo, $this->_name.celular, "
+        $stringSql = "$this->_name.id AS id_socio, "
+            . "$this->_name.first_name, $this->_name.last_name, $this->_name.sexo, $this->_name.celular, "
             . "$this->_name.email, $this->_name.direccion, $tb1.observacion, $tb1.fecha_registro, "
-            . "$tb1.id_empresa_producto, $tb1.id AS id_socio_suscriptor ";
+            . "$tb1.id_empresa_producto, $tb1.id AS id_socio_suscriptor, "
+            . "$tb1.fecha_inicio, $tb1.fecha_fin ";
 
         $this->db->select($stringSql);
         $this->db->from($this->_name);

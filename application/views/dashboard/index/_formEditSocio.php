@@ -1,9 +1,13 @@
                 <div class="row">
-                    <form action="" id="formEditSocio" name="formEditSocio">
+                    <form action="<?php echo base_url('socio/update') ?>" id="formEditSocio" name="formEditSocio" method="POST">
                         <fieldset disabled>
-                            id_empresa_producto<input type="text" name="id_empresa_producto" id="id_empresa_producto" value=""/>
+                            id_socio
+                            <input type="text" name="id_socio" id="id_socio" value=""/>
+                            id_empresa_producto
+                            <input type="text" name="id_empresa_producto" id="id_empresa_producto" value=""/>
+                            id_suscrito
+                            <input type="text" name="ac_socios_suscriptores.id" id="ac_socios_suscriptores.id" value=""/>
 
-                            id<input type="text" name="ac_socios_suscriptores.id" id="ac_socios_suscriptores.id" value=""/>
                             <div class="widget-main panel panel-primary padding-10">
                                 <ul class=" spaced list-inline">
                                     <li><strong type="button" class="blue">Suscrito a:</strong></li>
@@ -87,17 +91,33 @@
                             </div>
 
                             <div class="col-md-6">
-                                + time rest :
-                                <h2>Countdown with callback</h2>
-                                <p>Click on the green box to reset the counter to 10 sec.</p>
-                                <div class="countdown callback"></div>
+                                <div class="row form-group">
+                                    <div class="col-md-4"><label>Fecha Inicio</label></div>
+                                    <div class="col-md-8">
+                                        <input type="text" id="fecha_inicio" name="fecha_inicio" value="" class="form-control" disabled>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-md-4"><label>Fecha Fin</label></div>
+                                    <div class="col-md-8">
+                                        <input type="text" id="fecha_fin" name="fecha_fin" value="" class="form-control" disabled>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col-md-4"><label>Vence</label></div>
+                                    <div class="col-md-8">
+                                        <div class="countdown callback btn btn-sm btn-danger"></div>
+                                    </div>
+                                </div>
+
 
                             </div>
 
                             <!-- floatando TOOL-->
                             <div class="tools">
                                 <div class="action-buttons bigger-125">
-                                    <button class="btn btn-danger no-radius"><i class="icon-save bigger-130"></i> Guardar</button>
+                                    <button class="btn no-radius"><i class="icon-save bigger-130"></i> Guardar</button>
                                     <button type="button" class="btn btn-default no-radius">Cancelar</button>
                                 </div>
                             </div>

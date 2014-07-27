@@ -10,6 +10,11 @@ if ( ! function_exists('date_add')){
 
 
 if ( ! function_exists('getformatDateEsToEn')){
+    /**
+     * Only accept fecha in English and Espanish not time.
+     * @param string $dateString
+     * @return bool|string
+     */
     function getformatDateEsToEn($dateString)
     {
         $rs = FALSE;
@@ -24,11 +29,12 @@ if ( ! function_exists('getformatDateEsToEn')){
     }
 }
 
-/**
- * @param String format datetime 'Y-m-d'
- * @return DateTime
- */
-if ( ! function_exists('getDatetime')){
+
+if ( ! function_exists('getDatetime')) {
+    /**
+     * @param String format datetime 'Y-m-d'
+     * @return DateTime
+     */
     function getDateTime($dateString)
     {
         $array = preg_split('/-/',$dateString);
@@ -38,6 +44,27 @@ if ( ! function_exists('getDatetime')){
         return $date;
     }
 }
+
+if ( ! function_exists('getDateTimeFormat')) {
+    /**
+     * Formating of datetime
+     * @param DateTime $dateTime
+     * @param string $stringFormat
+     * @return bool|string
+     */
+    function getDateTimeFormat($dateTime,  $stringFormat = 'Y-m-d')
+    {
+        $rs = FALSE;
+        if (!empty($dateTime) || !is_null($dateTime)) {
+            $date = new DateTime($dateTime);
+            $rs = $date->format($stringFormat);
+        }
+
+        return $rs;
+    }
+}
+
+
 
 /* calcular la diferencia entre dos fechas
 if ( ! function_exists('date_diff')){

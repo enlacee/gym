@@ -83,8 +83,12 @@ class Socio extends my_controller {
                 $row['direccion'],
                 $row['observacion'],
                 // socio suscrito
-                $row['fecha_registro'],
-                $row['id_empresa_producto']);
+                getDateTimeFormat($row['fecha_registro'], 'Y-m-d'),
+                $row['id_empresa_producto'],
+                $row['id_socio'],
+                getDateTimeFormat($row['fecha_inicio'], 'Y-m-d H:i:s'),
+                getDateTimeFormat($row['fecha_fin'], 'Y-m-d H:i:s')
+            );
             $i++;
         }
 
@@ -127,7 +131,7 @@ class Socio extends my_controller {
             $datasocio['last_name'] = $this->input->post('addSocio_last_name');
             $datasocio['sexo'] = $this->input->post('addSocio_sexo');
             $datasocio['email'] = $this->input->post('addSocio_email');
-            $datasocio['celular'] = $this->input->post('addSocio_celular');
+            $datasocio['celular'] = str_replace('-', '', $this->input->post('addSocio_celular'));
             $datasocio['direccion'] = $this->input->post('addSocio_direccion');
 
             $datasocio['created_at'] = date("y-m-d h:i:s");
@@ -140,6 +144,36 @@ class Socio extends my_controller {
             echo 1;
             //$this->output->set_content_type('application/json');
             //$this->output->set_output(json_encode($arrayjson));
+        }
+    }
+
+    /**
+     * Update socio with field correspont in the respect tables
+     */
+    public function update()
+    {
+        if ($this->input->post()) {
+            // socio
+            $dataSocio['id'] = $this->input->post('id_socio');
+            $dataSocio['first_name'] = stripHTMLtags($this->input->post('first_name', TRUE));
+            $dataSocio['last_name'] = stripHTMLtags($this->input->post('last_name', TRUE));
+            $dataSocio['sexo'] = stripHTMLtags($this->input->post('sexo', TRUE));
+            $dataSocio['email'] = stripHTMLtags($this->input->post('email', TRUE));
+            $dataSocio['celular'] = stripHTMLtags(str_replace('-', '', $this->input->post('celular', TRUE)));
+            $dataSocio['direccion'] = stripHTMLtags($this->input->post('direccion', TRUE));
+            if ($dataSocio['id'] > 0) {
+                $this->socio_model->update($dataSocio);
+            }
+
+            // socio suscrito
+            $dataSocioSuscrito['id'] = $this->input->post('ac_socios_suscriptores_id'); // OJO [.=_] ac_socios_suscriptores.id
+            $dataSocioSuscrito['id_empresa'] = $this->userId;
+            $dataSocioSuscrito['observacion'] = stripHTMLtags($this->input->post('observacion', TRUE));
+            if (!empty($dataSocioSuscrito['observacion'])) {
+                $a = $this->Socio_Suscriptor_model->update($dataSocioSuscrito);
+            }
+
+            redirect('/dashboard');
         }
     }
 
@@ -168,13 +202,14 @@ class Socio extends my_controller {
     public function suscripcion()
     {
         $return = FALSE;
-        if (isAjax() == TRUE && $this->input->post()) {
+        $inputIdEmpresaProducto = $this->input->post('id_empresa_producto');
+        if (isAjax() == TRUE && $this->input->post() && empty($inputIdEmpresaProducto)) {
             $fechaInicio = $this->input->post('suscrip_fecha_inicio');
             $fechaInicio = getformatDateEsToEn($fechaInicio);
             $idEmpresaProducto = $this->input->post('suscrip_idEmpresaProducto');
-            $idSocio = $this->input->post('suscrip_idSocio');
+            $idSocioSubcrito = $this->input->post('suscrip_idSocio');
 
-            if ($idEmpresaProducto > 0 && $idSocio > 0 && $fechaInicio != FALSE) {
+            if ($idEmpresaProducto > 0 && $idSocioSubcrito > 0 && $fechaInicio != FALSE) {
                 $dataEmpresa = $this->_getEmpresaProducto($idEmpresaProducto);
 
                 if (!empty($dataEmpresa['nro_dia'])) {
@@ -186,9 +221,9 @@ class Socio extends my_controller {
                     $fechaFinDT = date_add($fechaInicioDT, $dias);
 
                     $dataUpdate = array(
-                        'id' => $idSocio,// id que se encuentra en el jqgrid (ID) $idSocio
+                        'id' => $idSocioSubcrito,// id que se encuentra en el jqgrid (ID) $idSocio
                         //'id_socio' => $idSocio,
-                        //'id_empresa' => $this->userId,
+                        'id_empresa' => $this->userId,
                         'id_empresa_producto' => $idEmpresaProducto,
                         'empresa_producto_precio' => $dataEmpresa['precio'],
                         'pago' => 0,
@@ -199,14 +234,11 @@ class Socio extends my_controller {
                         'estado' => self::ESTADO_ACTIVO,
                         'fecha_registro' => date('Y-m-d H:i:s')
                     );
-
-                    echo "<hr>";
-                    var_dump($dataUpdate);
-
+                    $return = $this->Socio_Suscriptor_model->update($dataUpdate);
                 }
             }
         }
-
+        echo $return;
     }
 
     /***

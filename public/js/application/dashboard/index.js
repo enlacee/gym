@@ -118,7 +118,7 @@ socio.fn.prototype.grid = function() {
         url:'socio/listGrid',
         datatype: "json",
         colNames:['id','nombre', 'apellido', 'sexo','celular','mail','direccion','nota','Fecha registro',
-            'id_empresa_producto'],
+            'id_empresa_producto', 'id_socio', 'fecha_inicio', 'fecha_fin'],
         colModel:[
             {name:'ac_socios_suscriptores.id',index:'ac_socios_suscriptores.id', width:55, search:false},
             {name:'first_name',index:'first_name', width:130, editable:true},
@@ -130,7 +130,12 @@ socio.fn.prototype.grid = function() {
             {name:'observacion',index:'observacion', width:100, hidden:true},
             {name:'fecha_registro',index:'fecha_registro', width:120, align:"right"},
             //socio suscrito
-            {name:'id_empresa_producto',index:'id_empresa_producto', width:130, align:"right", hidden:true}
+            {name:'id_empresa_producto',index:'id_empresa_producto', hidden:true},
+            {name:'id_socio',index:'id_socio', hidden:true},
+            //sociosucrito timer
+            {name:'fecha_inicio',index:'fecha_inicio', hidden:true},
+            {name:'fecha_fin',index:'fecha_fin', hidden:true}
+
         ],
         rowNum:10,
         rowList:[10,20,30],
@@ -163,6 +168,10 @@ socio.fn.prototype.grid = function() {
                 $(socio.param.formEditSocio).children()[0].removeAttribute('disabled');
                 //
                 gridEditEvent(rowData);
+
+                //timer
+                timerSuscriptor(rowData);
+
             } else {
                 alert("Please select Row")
             }
@@ -263,6 +272,30 @@ socio.fn.prototype.grid = function() {
             button.removeClass('disabled');
         }
     }
+
+    /**
+     * timer countdown convert string a Date and Update Timer
+     * for socio Fecha fin
+     */
+    function timerSuscriptor(objSocio) {
+        var hoy = new Date();
+        var dateTimeFinal = new Date(objSocio.fecha_fin);
+        var dateTimeInicio = new Date(objSocio.fecha_inicio);
+
+        if (!isNaN(dateTimeFinal) && !isNaN(dateTimeInicio)) { // fechas validas
+            if (dateTimeFinal > dateTimeInicio) {
+                $('.countdown.callback').show().removeClass('ended').data('countdown').update(dateTimeFinal).start();
+            } else if (dateTimeFinal.getMilliseconds() === dateTimeInicio.getMilliseconds()) {
+                $('.countdown.callback').data('countdown').stop(); console.log('timer ==');
+                $('.countdown.callback').hide();
+            }else {
+                $('.countdown.callback').data('countdown').stop(); console.log('timer menor');
+                $('.countdown.callback').hide();
+            }
+        } else {
+            $('.countdown.callback').hide();
+        }
+    }
 };
 
 socio.fn.prototype.validateNewSocio = function() {
@@ -300,31 +333,28 @@ socio.fn.prototype.validateNewSocio = function() {
         },
         submitHandler: function (form) {
             //console.log("form",form.children);
-            console.log("submit");
             var obj = $(this);
-            //obj[0].currentForm[10].text("enviandooo");
             $.ajax({
                 url: form.action,
                 type: form.method,
                 data: $(form).serialize(),
                 beforeSend: function() {
-                    //form.children[0].setAttribute("disabled","disabled");
+                    form.children[0].setAttribute("disabled","disabled");
                     obj[0].currentForm[10].innerHTML ="Enviando...";
                 },
                 success: function(response) {
-                    //$('#answers').html(response);
                     if (response == 1) {
                         form.children[0].removeAttribute('disabled');
-                        $('#myModal').modal('hide');
+                        $(socio.param.modalNew).modal('hide');
                         form.reset();
                         obj[0].currentForm[10].innerHTML ="Enviar";
 
                         $(socio.param.gridBody).trigger("reloadGrid");
-                        bootbox.alert("Se Guardo correctamente!", function() {
-                            //Example.show("Hello world callback");
-                        });
+                        bootbox.alert("Se Guardo correctamente!", function() {/*Example.show("Hello world callback");*/});
                     } else {
-                        alert("error request");
+                        alert("error in request, try again");
+                        form.children[0].removeAttribute('disabled');
+                        obj[0].currentForm[5].innerHTML = "Enviar";
                     }
                 }
             });
@@ -372,33 +402,31 @@ socio.fn.prototype.validateSuscripcionSocio = function() {
             }
         },
         submitHandler: function (form) {
-            //console.log("form",form.children);
-            console.log("submit");
             var obj = $(this);
-            //obj[0].currentForm[10].text("enviandooo");
             $.ajax({
                 url: form.action,
                 type: form.method,
                 data: $(form).serialize(),
                 beforeSend: function() {
-                    //form.children[0].setAttribute("disabled","disabled");
-                    //obj[0].currentForm[10].innerHTML ="Enviando...";
+                    form.children[0].setAttribute("disabled","disabled");
+                    obj[0].currentForm[5].innerHTML ="Enviando...";
                 },
                 success: function(response) {
-                    //$('#answers').html(response);
-                    /*if (response == 1) {
+                    if (response == 1) {
                         form.children[0].removeAttribute('disabled');
-                        $('#myModal').modal('hide');
+                        $(socio.param.modalSuscribirse).modal('hide');
                         form.reset();
-                        obj[0].currentForm[10].innerHTML ="Enviar";
+                        obj[0].currentForm[5].innerHTML = "Aceptar";
 
                         $(socio.param.gridBody).trigger("reloadGrid");
                         bootbox.alert("Se Guardo correctamente!", function() {
-                            //Example.show("Hello world callback");
+                            document.location.reload();
                         });
                     } else {
-                        alert("error request");
-                    }*/
+                        alert("error in request, try again");
+                        form.children[0].removeAttribute('disabled');
+                        obj[0].currentForm[5].innerHTML = "Aceptar";
+                    }
                 }
             });
         },
@@ -444,9 +472,11 @@ $( "#suscrip_fecha_inicio").datepicker({
 
 
 //test timer
+
 $(function () {
     $('.countdown.callback').countdown({
-        date: +(new Date) + 10000,
+        //date: +(new Date) + 10000,
+        date: +(new Date) + (1000*((60*60)*24)),
         render: function(data) {
             var stringTime = data.days + " days "+
             this.leadingZeros(data.hours, 2) + " hours "+
@@ -455,10 +485,12 @@ $(function () {
             $(this.el).text(stringTime);
         },
         onEnd: function() {
-            $(this.el).addClass('ended');
+            $(this.el).addClass('btn-danger');
+            alert("ACABO SU SUSCRIPCION [periodo]");
         }
-    }).on("click", function() {
+    })/*.on("click", function() {
         $(this).removeClass('ended').data('countdown').update(+(new Date) + 10000).start();
-    });
+    });*/
 });
+
 

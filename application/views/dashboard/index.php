@@ -21,9 +21,7 @@
                     <div class="tab-content">
                         <div id="socio" class="tab-pane active">
                             <div class="row form-group">
-                                <div class="col-md-10 col-xs-12"> <b>Administrar Membresias</b>
-                                    <a href="#" id="click">tab 2</a>
-                                </div>
+                                <div class="col-md-10 col-xs-12"> <b>Administrar Membresias</b></div>
 
                                 <div class="col-md-2 col-xs-12">
                                     <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal">

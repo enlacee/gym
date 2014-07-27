@@ -1,4 +1,4 @@
-            <form action="socio/add" name="formAddSocio" id="formAddSocio" method="POST">
+            <form action="<?php echo base_url('socio/add') ?>" name="formAddSocio" id="formAddSocio" method="POST">
                 <fieldset name="fset_formAddSocio" id="fset_formAddSocio">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>

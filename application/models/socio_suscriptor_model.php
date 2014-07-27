@@ -52,15 +52,24 @@ class Socio_Suscriptor_model  extends CI_Model {
 
     /**
      * Solo necesita idSocioSuscriptor para actualizar (ac_socios_suscriptores.id)
-     * @param int $id
-     * @param array $data
+     * @param array $data data of table with ID
      * @return boolean true or false if success
      */
-    public function updateSocioSuscriptor($id, $data)
+    public function update($data)
     {
-        $where = "id = " . $id;
-        $dataUpdate = array('nombre' => $this->input->post('nombre'));
-        //$this->db->update( 'ac_variables', $dataUpdate, $where);
+        $rs = FALSE;
+        $id = $data['id'];
+        $id_empresa = !empty($data['id_empresa']) ? $data['id_empresa'] : FALSE;
+        unset($data['id']);
+        unset($data['id_empresa']);
+        if(!empty($id) && $id > 0) {
+            $arrayWhere = array ('id' => $id, 'id_empresa' => $id_empresa);
+            $dataUpdate = $data;
+            $this->db->where($arrayWhere);
+            $this->db->update( $this->_name, $dataUpdate);
+            $rs = TRUE;
+        }
 
+        return $rs;
     }
 }

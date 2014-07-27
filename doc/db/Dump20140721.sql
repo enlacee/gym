@@ -331,16 +331,16 @@ CREATE TABLE `ac_socios_suscriptores` (
   `fecha_fin` datetime DEFAULT NULL,
   `observacion` text,
   `baja` int(1) DEFAULT '0' COMMENT '0= OFF : 1= ON',
-  `estado` int(1) DEFAULT NULL COMMENT '1 = ACTIVO 2 = AL COBRO 3 = EN MORA 0 = INACTIVO',
+  `estado` int(1) DEFAULT NULL COMMENT '1 = ACTIVO 2 = AL COBRO 3 = EN MORA 4 = INACTIVO',
   `fecha_registro` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_ac_suscriptores_ac_empresa_productos1_idx` (`id_empresa_producto`),
   KEY `fk_ac_suscriptores_ac_socios1_idx` (`id_socio`),
   KEY `fk_ac_socios_suscriptores_ac_empresas1_idx` (`id_empresa`),
+  CONSTRAINT `ac_socios_suscriptores_ibfk_3` FOREIGN KEY (`id_empresa_producto`) REFERENCES `ac_empresa_productos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `ac_socios_suscriptores_ibfk_1` FOREIGN KEY (`id_socio`) REFERENCES `ac_socios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `ac_socios_suscriptores_ibfk_2` FOREIGN KEY (`id_empresa`) REFERENCES `ac_empresas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `ac_socios_suscriptores_ibfk_3` FOREIGN KEY (`id_empresa_producto`) REFERENCES `ac_empresa_productos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='empresa_producto_precio : procio a la mano.estado : 1 = ACTIVO2 = AL COBRO3 = EN MORA4 = INACTIVO';
+  CONSTRAINT `ac_socios_suscriptores_ibfk_2` FOREIGN KEY (`id_empresa`) REFERENCES `ac_empresas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='empresa_producto_precio : procio a la mano.\nestado : \n1 = ACTIVO\n2 = AL COBRO\n3 = EN MORA\n4 = INACTIVO';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -349,7 +349,7 @@ CREATE TABLE `ac_socios_suscriptores` (
 
 LOCK TABLES `ac_socios_suscriptores` WRITE;
 /*!40000 ALTER TABLE `ac_socios_suscriptores` DISABLE KEYS */;
-INSERT INTO `ac_socios_suscriptores` VALUES (1,1,1,3,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL),(2,2,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL);
+INSERT INTO `ac_socios_suscriptores` VALUES (1,1,1,3,150,0,0,'2014-07-26 21:31:02','2014-07-26 21:31:02','2014-08-25 21:31:02',NULL,0,1,'2014-07-26 21:31:02'),(2,2,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL);
 /*!40000 ALTER TABLE `ac_socios_suscriptores` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -518,7 +518,7 @@ CREATE TABLE `ci_sessions` (
 
 LOCK TABLES `ci_sessions` WRITE;
 /*!40000 ALTER TABLE `ci_sessions` DISABLE KEYS */;
-INSERT INTO `ci_sessions` VALUES ('1321bebb688b616b5b299f641db9c8b4','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.153 Safari/537.36',1405404106,'a:3:{s:9:\"user_data\";s:0:\"\";s:5:\"token\";s:32:\"48289571c1bdff22ff28e851de666ae2\";s:4:\"user\";a:16:{s:2:\"id\";s:1:\"1\";s:10:\"first_name\";s:7:\"ROBERTO\";s:9:\"last_name\";s:5:\"RONEY\";s:5:\"email\";s:14:\"root@gmail.com\";s:8:\"password\";s:6:\"123456\";s:4:\"salt\";N;s:10:\"created_at\";s:19:\"2014-06-16 00:00:00\";s:10:\"updated_at\";N;s:6:\"status\";s:1:\"1\";s:10:\"empresa_id\";s:1:\"1\";s:14:\"empresa_nombre\";s:10:\"EMPRESA 01\";s:20:\"empresa_numDocumento\";s:10:\"1045269187\";s:22:\"empresa_tipo_documento\";s:3:\"RUC\";s:19:\"empresa_instalacion\";s:1:\"1\";s:14:\"empresa_status\";s:1:\"1\";s:30:\"empresa_fecha_inicio_membresia\";N;}}');
+INSERT INTO `ci_sessions` VALUES ('3ac1a25b0096f970dd917601a66ecfc1','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/34.0.1847.116 Chrome/34.0.1847.11',1406428940,'a:3:{s:9:\"user_data\";s:0:\"\";s:5:\"token\";s:32:\"bde107829739989dab1d057f43709308\";s:4:\"user\";a:16:{s:2:\"id\";s:1:\"1\";s:10:\"first_name\";s:7:\"ROBERTO\";s:9:\"last_name\";s:5:\"RONEY\";s:5:\"email\";s:14:\"root@gmail.com\";s:8:\"password\";s:6:\"123456\";s:4:\"salt\";N;s:10:\"created_at\";s:19:\"2014-06-16 00:00:00\";s:10:\"updated_at\";N;s:6:\"status\";s:1:\"1\";s:10:\"empresa_id\";s:1:\"1\";s:14:\"empresa_nombre\";s:10:\"EMPRESA 01\";s:20:\"empresa_numDocumento\";s:10:\"1045269187\";s:22:\"empresa_tipo_documento\";s:3:\"RUC\";s:19:\"empresa_instalacion\";s:1:\"1\";s:14:\"empresa_status\";s:1:\"1\";s:30:\"empresa_fecha_inicio_membresia\";N;}}'),('a3e54800f5ca324060c3b4992ee8f43d','127.0.0.1','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.153 Safari/537.36',1406428681,'a:3:{s:9:\"user_data\";s:0:\"\";s:5:\"token\";s:32:\"70bb9760d05c8e1fff533c6dcb4a245d\";s:4:\"user\";a:16:{s:2:\"id\";s:1:\"1\";s:10:\"first_name\";s:7:\"ROBERTO\";s:9:\"last_name\";s:5:\"RONEY\";s:5:\"email\";s:14:\"root@gmail.com\";s:8:\"password\";s:6:\"123456\";s:4:\"salt\";N;s:10:\"created_at\";s:19:\"2014-06-16 00:00:00\";s:10:\"updated_at\";N;s:6:\"status\";s:1:\"1\";s:10:\"empresa_id\";s:1:\"1\";s:14:\"empresa_nombre\";s:10:\"EMPRESA 01\";s:20:\"empresa_numDocumento\";s:10:\"1045269187\";s:22:\"empresa_tipo_documento\";s:3:\"RUC\";s:19:\"empresa_instalacion\";s:1:\"1\";s:14:\"empresa_status\";s:1:\"1\";s:30:\"empresa_fecha_inicio_membresia\";N;}}'),('b18a71c5cb419638afdfbfa2d1d8003b','127.0.0.1','Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:24.0) Gecko/20100101 Firefox/24.0',1406428872,'a:3:{s:9:\"user_data\";s:0:\"\";s:5:\"token\";s:32:\"dc25dac90e79475081b982d13864356e\";s:4:\"user\";a:16:{s:2:\"id\";s:1:\"1\";s:10:\"first_name\";s:7:\"ROBERTO\";s:9:\"last_name\";s:5:\"RONEY\";s:5:\"email\";s:14:\"root@gmail.com\";s:8:\"password\";s:6:\"123456\";s:4:\"salt\";N;s:10:\"created_at\";s:19:\"2014-06-16 00:00:00\";s:10:\"updated_at\";N;s:6:\"status\";s:1:\"1\";s:10:\"empresa_id\";s:1:\"1\";s:14:\"empresa_nombre\";s:10:\"EMPRESA 01\";s:20:\"empresa_numDocumento\";s:10:\"1045269187\";s:22:\"empresa_tipo_documento\";s:3:\"RUC\";s:19:\"empresa_instalacion\";s:1:\"1\";s:14:\"empresa_status\";s:1:\"1\";s:30:\"empresa_fecha_inicio_membresia\";N;}}');
 /*!40000 ALTER TABLE `ci_sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -531,4 +531,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-07-15  1:13:05
+-- Dump completed on 2014-07-26 21:50:36
