@@ -1,5 +1,7 @@
 <?php
-
+/*
+ * Class Dashboard
+ */
 class Dashboard extends MY_Controller {
 
     public function __construct()

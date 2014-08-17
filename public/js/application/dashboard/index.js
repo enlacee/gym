@@ -278,30 +278,69 @@ socio.fn.prototype.grid = function() {
      * for socio Fecha fin
      */
     function timerSuscriptor(objSocio) {
-        var hoy = new Date();
-        var dateTimeFinal = new Date(objSocio.fecha_fin);
-        var dateTimeInicio = new Date(objSocio.fecha_inicio);
+        var hoy = new Date(),
+            dateTimeFinal,
+            dateTimeInicio,
+            showTimer = false;
 
-        console.log ("------------------------------------");
-        console.log ("debuger in FIREFOX AND CHORME FECHAS");
-        console.log ("------------------------------------");
-        console.log('dateTimeInicio',dateTimeInicio.getDate());
-        console.log('dateTimeFinal',dateTimeFinal.getDate());
+        if (objSocio.fecha_fin != 'false' || objSocio.fecha_inicio != 'false' ) {
+            dateTimeFinal = _settingDateTime(objSocio.fecha_fin);
+            dateTimeInicio = _settingDateTime(objSocio.fecha_inicio);
+        }
 
-        if (!isNaN(dateTimeFinal) && !isNaN(dateTimeInicio)) { // fechas validas
-            if (dateTimeFinal > dateTimeInicio) { console.log('ok timer');
-                $('.countdown.callback').show().removeClass('ended').data('countdown').update(dateTimeFinal).start();
-            } else if (dateTimeFinal.getMilliseconds() === dateTimeInicio.getMilliseconds()) {
-                $('.countdown.callback').data('countdown').stop(); console.log('timer ==');
-                $('.countdown.callback').hide();
-            }else {
-                $('.countdown.callback').data('countdown').stop(); console.log('timer menor');
-                $('.countdown.callback').hide();
+        if (!isNaN(dateTimeFinal) || !isNaN(dateTimeInicio)) { // fechas validas
+            // not execute action countTime (tru condicion)
+            // this action resolv CRON (setting status = baja)
+            if (hoy.getTime() <= dateTimeFinal.getTime()) {
+
+                if (dateTimeFinal.getTime() > dateTimeInicio.getTime()) { console.log('ok timer');
+                    $('.countdown.callback').data('countdown').update(dateTimeFinal).start();
+                    showTimer = true;
+                } else if (dateTimeFinal.getTime() === dateTimeInicio.getTime()) {
+                    console.log('timer ==');
+                } else {
+                    console.log('timer menor');
+                }
             }
-        } else { console.log('is nan ELSE');
+
+        }
+
+        if (showTimer == true) {
+            $('.countdown.callback').show();
+        } else {
+            $('.countdown.callback').data('countdown').stop();
             $('.countdown.callback').hide();
         }
     }
+
+    /**
+     * function setting datetime compatible multiple navigator chrome and firefox
+     * @param stringDate 2014-07-28 03:42:23
+     */
+    function _settingDateTime(stringDate) {
+        var myDate = new Date();
+        //string
+        var arrayDate = stringDate.split(' ');
+        if (arrayDate.length > 0) {
+            var date = arrayDate[0];
+            var time = arrayDate[1];
+
+            var dateSplit = date.split('-');
+            var timeSplit = time.split(':');
+            myDate.setFullYear (dateSplit[0]);
+            myDate.setMonth (dateSplit[1]-1);
+            myDate.setDate (dateSplit[2]);
+            myDate.setHours (timeSplit[0]);
+            myDate.setMinutes (timeSplit[1]);
+            myDate.setSeconds(timeSplit[2]);
+        } else {
+            myDate = false;
+        }
+
+        return myDate;
+    }
+
+
 };
 
 socio.fn.prototype.validateNewSocio = function() {
@@ -491,10 +530,10 @@ $(function () {
             $(this.el).text(stringTime);
         },
         onEnd: function() {
-            $(this.el).addClass('btn-danger');
-            alert("ACABO SU SUSCRIPCION [periodo]");
+            //$(this.el).addClass('btn-danger');
+            alert("EndEnd Suscription [periodo]");
         }
-    })/*.on("click", function() {
+    }).hide()/*.on("click", function() {
         $(this).removeClass('ended').data('countdown').update(+(new Date) + 10000).start();
     });*/
 });

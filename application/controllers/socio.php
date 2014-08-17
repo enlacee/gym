@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Class Socio
  */
@@ -27,16 +26,16 @@ class Socio extends my_controller {
 
     }
 
-    public function listgrid()
+    public function listGrid()
     {
-        //------
         $page = $this->input->get('page');
       	$limit = $this->input->get('rows'); //my_controlleradmin::limit;
         $sidx = $this->input->get('sidx');
         $sord = $this->input->get('sord');
         $datagrid = array();
-        $responce = new stdclass();
-        if (isset($_get['searchfield']) && ($_get['searchstring'] != null)) {
+
+        $responce = new stdClass();
+        if (isset($_GET['searchField']) && ($_GET['searchString'] != null)) {
             $operadores["eq"] = "=";
             $operadores["ne"] = "<>";
             $operadores["lt"] = "<";
@@ -44,16 +43,16 @@ class Socio extends my_controller {
             $operadores["gt"] = ">";
             $operadores["ge"] = ">=";
             $operadores["cn"] = "like";
-            if ($_get['searchoper'] == "cn") {
-                $datagrid['string'] = $_get['searchfield'] . " " . $operadores[$_get['searchoper']] . " '%" . $_get['searchstring'] . "%' ";
+            if ($_GET['searchOper'] == "cn") {
+                $datagrid['string'] = $_GET['searchField'] . " " . $operadores[$_GET['searchOper']] . " '%" . $_GET['searchString'] . "%' ";
             } else {
-                $datagrid['string'] = $_get['searchfield'] . " " . $operadores[$_get['searchoper']] . "'" . $_get['searchstring'] . "'";
+                $datagrid['string'] = $_GET['searchField'] . " " . $operadores[$_GET['searchOper']] . "'" . $_GET['searchString'] . "'";
             }
         }
 
         $datagrid['oderby'] = array('sidx' => $sidx, 'sord' => $sord);
         $datagrid['limit'] = $limit;
-        $count = $this->socio_model->jqlistsociossuscritos(1, $datagrid, true);
+        $count = $this->socio_model->jqListSociosSuscritos($this->empresaId, $datagrid, true);
 
         if ($count > 0) {
             $total_pages = ceil($count/$limit);
@@ -65,7 +64,7 @@ class Socio extends my_controller {
 
         $start = $limit * $page - $limit;
         $datagrid['start'] = $start;
-        $result = $this->socio_model->jqlistsociossuscritos(1, $datagrid);
+        $result = $this->socio_model->jqListSociosSuscritos($this->empresaId, $datagrid);
 
         $responce->page = $page;
         $responce->total = $total_pages;
@@ -94,11 +93,6 @@ class Socio extends my_controller {
 
         $this->output->set_content_type('application/json');
         $this->output->set_output(json_encode($responce));
-
-
-
-
-
         /*
         $array[] = array(
             'id' => 1,

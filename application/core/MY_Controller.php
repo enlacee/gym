@@ -10,13 +10,16 @@
 class MY_Controller extends CI_Controller {
     
     public $ACL = FALSE;
-    public $userId; 
+    public $userId;
+    public $empresaId;
     public $dataView = array();       
     private $flagGrid = false;
 
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('Usuario_model');
+
         $this->dependencias();
         $this->validarUsuario();        
     }
@@ -28,9 +31,10 @@ class MY_Controller extends CI_Controller {
      */    
     private function validarUsuario()
     {   
-        $user = $this->session->userdata('user');                  
-        if (!empty($user) && isset($user['id'])) {
+        $user = $this->getUserSession();
+        if (!empty($user) && isset($user['id']) && ($user['empresa_id'] > 0) ) {
             $this->userId = $user['id'];
+            $this->empresaId = $user['empresa_id'];
             $this->ACL = TRUE;
         }
     }
@@ -67,9 +71,7 @@ class MY_Controller extends CI_Controller {
      */
     public function getUserSession()
     {
-        $this->load->model('Usuario_model');
-        $usuario = $this->session->userdata('user');
-        return $usuario;
+        return $this->session->userdata('user');
     }
 
     /*

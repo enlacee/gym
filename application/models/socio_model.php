@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * Class Socio_model
+ */
 class Socio_model  extends CI_Model {
     
     protected $_name = 'ac_socios';
